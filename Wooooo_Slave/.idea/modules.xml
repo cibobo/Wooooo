@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Wooooo_Slave.iml" filepath="$PROJECT_DIR$/Wooooo_Slave.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slave/slave.iml" filepath="$PROJECT_DIR$/slave/slave.iml" />
+    </modules>
+  </component>
+</project>
+
