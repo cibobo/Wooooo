@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="login_editText_length">200dp</dimen>
+    <dimen name="login_editText_width">50dp</dimen>
 
     </resources>
