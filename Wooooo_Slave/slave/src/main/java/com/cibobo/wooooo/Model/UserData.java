@@ -1,4 +1,4 @@
-package com.cibobo.wooooo.Model;
+package com.cibobo.wooooo.model;
 
 /**
  * Created by Cibobo on 9/28/14.

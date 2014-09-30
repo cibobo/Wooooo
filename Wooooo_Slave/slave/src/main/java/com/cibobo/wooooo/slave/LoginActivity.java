@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.cibobo.wooooo.Model.UserData;
+import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.asynctasks.UserVerification;
 
 public class LoginActivity extends ActionBarActivity {
@@ -22,7 +22,7 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_slave_login);
+        setContentView(R.layout.activity_login);
 
         context = this;
 
