@@ -11,8 +11,8 @@
     <!-- Component names -->
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
-    <string name="button_salve">I am coming...</string>
-    <string name="button_master">I am waiting...</string>
+    <string name="button_salve">I am coming ...</string>
+    <string name="button_master">... I am waiting</string>
     <string name="ErrorMessage_Login">The user name or password is wrong, please try again</string>
     <string name="title_activity_begin">BeginActivity</string>
 

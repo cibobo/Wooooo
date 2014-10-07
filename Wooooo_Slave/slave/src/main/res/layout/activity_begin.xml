@@ -16,7 +16,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:background="@color/blue"/>
+        android:background="@color/blue"
+        android:drawableLeft="@drawable/car"
+        android:gravity="right|center_vertical"
+        android:paddingRight="@dimen/begin_buttons_padding"
+        android:paddingLeft="@dimen/begin_buttons_padding"/>
 
     <Button
         android:layout_width="@dimen/begin_buttons_width"
@@ -26,6 +30,10 @@
         android:layout_below="@+id/buttonSlave"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:background="@color/blue"/>
+        android:background="@color/blue"
+        android:drawableRight="@drawable/sad_face"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/begin_buttons_padding"
+        android:paddingRight="@dimen/begin_buttons_padding"/>
 
 </RelativeLayout>
