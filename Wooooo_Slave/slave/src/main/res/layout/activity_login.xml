@@ -55,6 +55,6 @@
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:background="@color/blue"/>
+        android:background="@drawable/button_selector"/>
 
 </RelativeLayout>

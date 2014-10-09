@@ -11,9 +11,12 @@
     <!-- Component names -->
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
-    <string name="button_salve">I am coming ...</string>
-    <string name="button_master">... I am waiting</string>
+    <string name="button_salve">I\'m coming ...</string>
+    <string name="button_master">... I\'m waiting</string>
     <string name="ErrorMessage_Login">The user name or password is wrong, please try again</string>
     <string name="title_activity_begin">BeginActivity</string>
+    <string name="title_activity_slave">SlaveActivity</string>
+
+    <string name="slave_background_text">I\'m watching you!</string>
 
 </resources>

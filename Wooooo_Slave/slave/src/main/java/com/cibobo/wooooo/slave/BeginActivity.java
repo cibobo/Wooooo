@@ -1,17 +1,38 @@
 package com.cibobo.wooooo.slave;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class BeginActivity extends ActionBarActivity {
+    private Button beginSlaveButton;
+    private Button beginMasterButton;
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
+
+        context = this;
+
+        beginSlaveButton = (Button) this.findViewById(R.id.buttonSlave);
+        beginMasterButton = (Button) this.findViewById(R.id.buttonMaster);
+
+        beginSlaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent slaveIntent = new Intent(context, SlaveActivity.class);
+                context.startActivity(slaveIntent);
+            }
+        });
     }
 
 

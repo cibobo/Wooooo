@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.slave.BeginActivity;
-import com.cibobo.wooooo.slave.MainActivity;
 import com.cibobo.wooooo.slave.R;
 
 /**
@@ -37,7 +36,7 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
     }
 
     protected void onPostExecute(UserData user){
-        //TODO: If verification is successful, start MainActivity
+        //TODO: If verification is successful, start MasterActivity
         if(user != null){
             Intent mainIntent = new Intent(context, BeginActivity.class);
             context.startActivity(mainIntent);
