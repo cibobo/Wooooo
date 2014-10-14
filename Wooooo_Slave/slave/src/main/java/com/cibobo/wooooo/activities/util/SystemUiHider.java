@@ -1,4 +1,4 @@
-package com.cibobo.wooooo.slave.util;
+package com.cibobo.wooooo.activities.util;
 
 import android.app.Activity;
 import android.os.Build;

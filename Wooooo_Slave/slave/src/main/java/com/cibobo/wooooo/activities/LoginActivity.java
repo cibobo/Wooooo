@@ -1,4 +1,4 @@
-package com.cibobo.wooooo.slave;
+package com.cibobo.wooooo.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.asynctasks.UserVerification;
+import com.cibobo.wooooo.slave.R;
 
 public class LoginActivity extends ActionBarActivity {
     private Context context;

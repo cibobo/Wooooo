@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.cibobo.wooooo.slave.LoginActivity"
+            android:name="com.cibobo.wooooo.activities.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,17 +36,17 @@
         <meta_data android:name="com.google.android.gms.version" />
 
         <activity
-            android:name="com.cibobo.wooooo.slave.MasterActivity"
+            android:name="com.cibobo.wooooo.activities.MasterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_main"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="com.cibobo.wooooo.slave.BeginActivity"
+            android:name="com.cibobo.wooooo.activities.BeginActivity"
             android:label="@string/title_activity_begin" >
         </activity>
         <activity
-            android:name="com.cibobo.wooooo.slave.SlaveActivity"
+            android:name="com.cibobo.wooooo.activities.SlaveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_slave"
             android:theme="@style/FullscreenTheme" >

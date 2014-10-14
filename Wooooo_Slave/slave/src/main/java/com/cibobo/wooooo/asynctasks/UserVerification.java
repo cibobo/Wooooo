@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
-import com.cibobo.wooooo.slave.BeginActivity;
+import com.cibobo.wooooo.activities.BeginActivity;
 import com.cibobo.wooooo.slave.R;
 
 /**

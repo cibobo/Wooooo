@@ -1,6 +1,7 @@
-package com.cibobo.wooooo.slave;
+package com.cibobo.wooooo.activities;
 
-import com.cibobo.wooooo.slave.util.SystemUiHider;
+import com.cibobo.wooooo.activities.util.SystemUiHider;
+import com.cibobo.wooooo.slave.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -14,7 +15,7 @@ import android.view.View;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  *
- * @see SystemUiHider
+ * @see com.cibobo.wooooo.activities.util.SystemUiHider
  */
 public class MasterActivity extends Activity {
     /**
@@ -36,7 +37,7 @@ public class MasterActivity extends Activity {
     private static final boolean TOGGLE_ON_CLICK = true;
 
     /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
+     * The flags to pass to {@link com.cibobo.wooooo.activities.util.SystemUiHider#getInstance}.
      */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
 
