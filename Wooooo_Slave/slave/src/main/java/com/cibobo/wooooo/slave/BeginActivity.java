@@ -2,6 +2,7 @@ package com.cibobo.wooooo.slave;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,8 +30,11 @@ public class BeginActivity extends ActionBarActivity {
         beginSlaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent slaveIntent = new Intent(context, SlaveActivity.class);
-                context.startActivity(slaveIntent);
+                //Test Code
+                SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_data_preference), Context.MODE_PRIVATE);
+                beginSlaveButton.setText(sharedPref.getString("username", "Unknown"));
+                //Intent slaveIntent = new Intent(context, SlaveActivity.class);
+                //context.startActivity(slaveIntent);
             }
         });
     }

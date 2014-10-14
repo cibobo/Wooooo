@@ -50,7 +50,7 @@
     <Button
         android:layout_width="@dimen/login_editText_width"
         android:layout_height="@dimen/login_editText_height"
-        android:text="Log In"
+        android:text="@string/button_login"
         android:id="@+id/buttonLogin"
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"

@@ -2,16 +2,16 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\classes-36500c30d140134e5298b78472b477654c232672.jar"
-        jar="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.0.1\classes.jar"
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\support-v4-19.1.0-3bd2ccafd5ef97b986174094847e53b1f7977a57.jar"
+        jar="C:\Users\Beibei\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b"/>
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\support-v4-19.0.1-19607a11aa334c2c8272fdb613d1f4b77ea6a837.jar"
-        jar="D:\Program\android-studio-ide-135.1446794-windows\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.0.1\support-v4-19.0.1.jar"
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\classes-c5a9a3b13065be7fdf4e33832eb21a6da1eec470.jar"
+        jar="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
 
 </pre-dex-items>

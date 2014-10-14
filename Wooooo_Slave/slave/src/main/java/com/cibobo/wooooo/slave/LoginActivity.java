@@ -1,6 +1,8 @@
 package com.cibobo.wooooo.slave;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +27,9 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
         context = this;
+
+        //Create a Shared Preference. The login data will be saved after verification of User
+        SharedPreferences loginData = this.getSharedPreferences(getString(R.string.login_data_preference), Context.MODE_PRIVATE);
 
         userNameEditText = (EditText)this.findViewById(R.id.editTextUserName);
         passWordEditText = (EditText)this.findViewById(R.id.editTextPassword);

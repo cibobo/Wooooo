@@ -2,6 +2,7 @@ package com.cibobo.wooooo.asynctasks;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -38,7 +39,15 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
     protected void onPostExecute(UserData user){
         //TODO: If verification is successful, start MasterActivity
         if(user != null){
+            //Save login data into the Shared Preference
+            SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_data_preference), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("username", user.getUserName());
+            editor.putString("password", user.getPassWord());
+            editor.commit();
+
             Intent mainIntent = new Intent(context, BeginActivity.class);
+
             context.startActivity(mainIntent);
         } else {
             Toast.makeText(context, context.getString(R.string.ErrorMessage_Login), Toast.LENGTH_SHORT).show();
