@@ -10,6 +10,8 @@
     
     <!-- App String -->
     <string name="login_data_preference">LOGIN_DATA_PREFERENCE</string>
+    <string name="login_username">USERNAME</string>
+    <string name="login_password">PASSWORD</string>
 
     <!-- Component names -->
     <string name="user_name">User Name</string>

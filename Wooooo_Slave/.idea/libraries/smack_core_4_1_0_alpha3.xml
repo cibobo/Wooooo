@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="smack-core-4.1.0-alpha3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-core/4.1.0-alpha3/4591029940b157bd345dde7bd969da9d0eb5bd02/smack-core-4.1.0-alpha3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-core/4.1.0-alpha3/b731254d88579844434b915b365e5dfcc0024de3/smack-core-4.1.0-alpha3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

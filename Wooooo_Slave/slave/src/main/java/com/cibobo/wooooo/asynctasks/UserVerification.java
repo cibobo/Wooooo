@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.activities.BeginActivity;
+import com.cibobo.wooooo.service.connection.ConnectionService;
+import com.cibobo.wooooo.service.connection.ConnectionServiceFactory;
 import com.cibobo.wooooo.slave.R;
 
 /**
@@ -18,6 +20,7 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
     //Context of the current activity, which will be used to star the new activity.
     private Context context;
 
+    private ConnectionService connectionService;
     /*
     Constructor, which can get the context from the current activity.
      */
@@ -27,9 +30,20 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
 
     @Override
     protected UserData doInBackground(UserData... users) {
-        //TODO: Create verification functions to XMPP connection.
         UserData currentUser = users[0];
+/*
         if(currentUser.getUserName().equals("cibobo")){
+            return currentUser;
+        } else {
+            return null;
+        }
+*/
+        connectionService = ConnectionServiceFactory.createXMPPInstantMessageService();
+        boolean isConnectSuccessful = connectionService.connect(currentUser.getUserName(), currentUser.getPassWord());
+
+        if(isConnectSuccessful){
+            this.updateUserAccount(currentUser.getUserName(), currentUser.getPassWord());
+            connectionService.sendMessage();
             return currentUser;
         } else {
             return null;
@@ -37,20 +51,24 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
     }
 
     protected void onPostExecute(UserData user){
-        //TODO: If verification is successful, start MasterActivity
         if(user != null){
-            //Save login data into the Shared Preference
-            SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_data_preference), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("username", user.getUserName());
-            editor.putString("password", user.getPassWord());
-            editor.commit();
-
             Intent mainIntent = new Intent(context, BeginActivity.class);
-
             context.startActivity(mainIntent);
         } else {
             Toast.makeText(context, context.getString(R.string.ErrorMessage_Login), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Save login data into the Shared Preference
+     * @param username
+     * @param password
+     */
+    private void updateUserAccount(String username, String password){
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_data_preference), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getString(R.string.login_username), username);
+        editor.putString(context.getString(R.string.login_password), password);
+        editor.commit();
     }
 }
