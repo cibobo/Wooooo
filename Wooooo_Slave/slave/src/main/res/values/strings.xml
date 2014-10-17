@@ -12,10 +12,12 @@
     <string name="login_data_preference">LOGIN_DATA_PREFERENCE</string>
     <string name="login_username">USERNAME</string>
     <string name="login_password">PASSWORD</string>
+    <string name="login_isPassSaved">IS_PASS_SAVED</string>
 
     <!-- Component names -->
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
+    <string name="checkbox_save_pass">save password</string>
     <string name="button_login">Log In</string>
     <string name="button_salve">I\'m coming ...</string>
     <string name="button_master">... I\'m waiting</string>
@@ -23,6 +25,7 @@
     <string name="title_activity_begin">BeginActivity</string>
     <string name="title_activity_slave">SlaveActivity</string>
 
+    <!-- Messages -->
     <string name="slave_background_text">I\'m watching you!</string>
 
 </resources>

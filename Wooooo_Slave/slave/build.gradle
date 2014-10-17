@@ -29,7 +29,6 @@ dependencies {
     //
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'org.igniterealtime.smack:smack-android:4.1.0-alpha3'
-    compile 'org.igniterealtime.smack:smack-android-extensions:4.1.0-alpha3'
     compile 'org.igniterealtime.smack:smack-tcp:4.1.0-alpha3'
 }
 

@@ -43,7 +43,7 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
 
         if(isConnectSuccessful){
             this.updateUserAccount(currentUser.getUserName(), currentUser.getPassWord());
-            connectionService.sendMessage();
+//            connectionService.sendMessage();
             return currentUser;
         } else {
             return null;
@@ -68,7 +68,11 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_data_preference), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(context.getString(R.string.login_username), username);
-        editor.putString(context.getString(R.string.login_password), password);
+        //Check whether the password should be saved or not in the shared preference
+        //Default situation is not save
+        if(sharedPref.getBoolean(context.getString(R.string.login_isPassSaved), false)){
+            editor.putString(context.getString(R.string.login_password), password);
+        }
         editor.commit();
     }
 }

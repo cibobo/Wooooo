@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.cibobo.wooooo.model.UserData;
@@ -20,7 +21,11 @@ public class LoginActivity extends ActionBarActivity {
     private EditText userNameEditText;
     private EditText passWordEditText;
 
+    private CheckBox savePassCheckBox;
+
     private Button loginButton;
+
+    private SharedPreferences loginDataSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +35,37 @@ public class LoginActivity extends ActionBarActivity {
         context = this;
 
         //Create a Shared Preference. The login data will be saved after verification of User
-        SharedPreferences loginData = this.getSharedPreferences(getString(R.string.login_data_preference), Context.MODE_PRIVATE);
+        loginDataSharedPref = this.getSharedPreferences(getString(R.string.login_data_preference), Context.MODE_PRIVATE);
 
         userNameEditText = (EditText)this.findViewById(R.id.editTextUserName);
         passWordEditText = (EditText)this.findViewById(R.id.editTextPassword);
-
+        savePassCheckBox = (CheckBox)this.findViewById(R.id.checkBoxSavePass);
         loginButton = (Button)this.findViewById(R.id.buttonLogin);
+
+        //Set the user name as in the last login
+        String savedUserName = loginDataSharedPref.getString(this.getString(R.string.login_username),"");
+        userNameEditText.setText(savedUserName);
+
+        //If "save password" is selected by the user in last login, set the password with saved value.
+        boolean isPassSaved = loginDataSharedPref.getBoolean(this.getString(R.string.login_isPassSaved), false);
+        if(isPassSaved){
+            String savedPassword = loginDataSharedPref.getString(this.getString(R.string.login_password), "");
+            passWordEditText.setText(savedPassword);
+            savePassCheckBox.setSelected(true);
+        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String userName = userNameEditText.getText().toString();
                 String passWord = passWordEditText.getText().toString();
+
+                //Check whether the password should be saved
+                boolean isPassSaved = savePassCheckBox.isChecked();
+                //Save the selection of the user into shared preference
+                SharedPreferences.Editor editor = loginDataSharedPref.edit();
+                editor.putBoolean(context.getString(R.string.login_isPassSaved), isPassSaved);
+                editor.commit();
 
                 UserData userData = new UserData(userName,passWord);
                 UserVerification verification = new UserVerification(context);

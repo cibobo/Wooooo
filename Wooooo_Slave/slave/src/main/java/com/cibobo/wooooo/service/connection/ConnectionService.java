@@ -10,4 +10,6 @@ public interface ConnectionService {
     public boolean connect(String username, String password);
 
     public void sendMessage();
+
+    public Object receiveMessage();
 }

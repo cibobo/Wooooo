@@ -51,6 +51,12 @@
             android:label="@string/title_activity_slave"
             android:theme="@style/FullscreenTheme" >
         </activity>
+
+        <service
+            android:name="com.cibobo.wooooo.service.android.MessageService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
