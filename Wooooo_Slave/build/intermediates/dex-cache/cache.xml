@@ -2,16 +2,64 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\classes-36500c30d140134e5298b78472b477654c232672.jar"
-        jar="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.0.1\classes.jar"
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-tcp-4.1.0-alpha3-d556a7d6d02247f5de932de4462a3dd4ed13770d.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-tcp\4.1.0-alpha3\4ef5f3e7c225813de9377e61145ec047bbc9cd69\smack-tcp-4.1.0-alpha3.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b"/>
+        sha1="4ef5f3e7c225813de9377e61145ec047bbc9cd69"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\support-v4-19.0.1-19607a11aa334c2c8272fdb613d1f4b77ea6a837.jar"
-        jar="D:\Program\android-studio-ide-135.1446794-windows\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.0.1\support-v4-19.0.1.jar"
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\support-v4-19.1.0-3bd2ccafd5ef97b986174094847e53b1f7977a57.jar"
+        jar="C:\Users\Beibei\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-core-4.1.0-alpha3-3faed0c32573c2892460194e32721184fd518d37.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-core\4.1.0-alpha3\4591029940b157bd345dde7bd969da9d0eb5bd02\smack-core-4.1.0-alpha3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="4591029940b157bd345dde7bd969da9d0eb5bd02"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-resolver-minidns-4.1.0-alpha3-8bce9f889b9a59d58e1e945e08143a1eb51a7f8a.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-resolver-minidns\4.1.0-alpha3\c8ac7d87e6f5a17feed27a8f3e7375f6ac9f4b8e\smack-resolver-minidns-4.1.0-alpha3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="c8ac7d87e6f5a17feed27a8f3e7375f6ac9f4b8e"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\jxmpp-util-cache-0.3.0-d895217ca5bfc8bfc0c36d0bd68b70305bd2827f.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-util-cache\0.3.0\8a1440478536877abcd1e6fdaec8d0401c3530b8\jxmpp-util-cache-0.3.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8a1440478536877abcd1e6fdaec8d0401c3530b8"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\jxmpp-core-0.3.0-a9f5fa0add49467cdc3a9ba9400efeef2a68e4f4.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-core\0.3.0\8ec041f39f19b2ed09da74edbc269b2d28cc2502\jxmpp-core-0.3.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8ec041f39f19b2ed09da74edbc269b2d28cc2502"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-sasl-provided-4.1.0-alpha3-2d7b1afa04a879d28c538f03f394563f9f01b610.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-sasl-provided\4.1.0-alpha3\2ad824c5dad786193825692cf6204fc8ecf80cbd\smack-sasl-provided-4.1.0-alpha3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="2ad824c5dad786193825692cf6204fc8ecf80cbd"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\minidns-0.1.1-302d9e2e4c4fb1e445210426cc6f33995916e3f7.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\de.measite.minidns\minidns\0.1.1\f5fbbedfb66d4623f3a201eb3eda0e7c688bfb14\minidns-0.1.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f5fbbedfb66d4623f3a201eb3eda0e7c688bfb14"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-android-4.1.0-alpha3-7977b9eaf911e1949c97d0747fbc12a5ea86bc03.jar"
+        jar="C:\Users\Beibei\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-android\4.1.0-alpha3\5a72151b6dd7504abf72bccf5f9e86efe1045567\smack-android-4.1.0-alpha3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="5a72151b6dd7504abf72bccf5f9e86efe1045567"/>
+    <item
+        dex="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\classes-c5a9a3b13065be7fdf4e33832eb21a6da1eec470.jar"
+        jar="C:\Users\Beibei\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
 
 </pre-dex-items>

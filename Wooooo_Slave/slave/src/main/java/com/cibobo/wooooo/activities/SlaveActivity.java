@@ -1,21 +1,26 @@
-package com.cibobo.wooooo.slave;
+package com.cibobo.wooooo.activities;
 
-import com.cibobo.wooooo.slave.util.SystemUiHider;
+import com.cibobo.wooooo.activities.util.SystemUiHider;
+import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
+import com.cibobo.wooooo.slave.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  *
- * @see SystemUiHider
+ * @see com.cibobo.wooooo.activities.util.SystemUiHider
  */
 public class SlaveActivity extends Activity {
     /**
@@ -37,7 +42,7 @@ public class SlaveActivity extends Activity {
     private static final boolean TOGGLE_ON_CLICK = true;
 
     /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
+     * The flags to pass to {@link com.cibobo.wooooo.activities.util.SystemUiHider#getInstance}.
      */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
 
@@ -46,11 +51,17 @@ public class SlaveActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+    private String SLAVE_ACTIVITY_LOG_TITLE = "SlaveActivity";
+    private Context context;
+    private final Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_slave);
+
+        context = this;
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
@@ -113,6 +124,39 @@ public class SlaveActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        /*
+         * Create a new thread to answer the message from Master Client
+         */
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                XMPPInstantMessageService.getInstance().autoAnswer();
+//                try {
+//                    wait(3000);
+//                } catch (InterruptedException e) {
+//                    Log.e(SLAVE_ACTIVITY_LOG_TITLE, e.toString());
+//                }
+//            }
+//        });
+//        thread.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(context, "Start", Toast.LENGTH_SHORT);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+//                String receivedMessage = (String)XMPPInstantMessageService.getInstance().receiveMessage();
+//                Toast.makeText(context, receivedMessage, Toast.LENGTH_SHORT);
+//                Log.i(SLAVE_ACTIVITY_LOG_TITLE, "Get the message from GTalk " + receivedMessage);
+                XMPPInstantMessageService.getInstance().autoAnswer();
+                Toast.makeText(context, "Run Automatic answer service", Toast.LENGTH_SHORT);
+            }
+        };
+        handler.postDelayed(runnable,400L);
     }
 
     @Override

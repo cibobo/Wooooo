@@ -1,4 +1,4 @@
-package com.cibobo.wooooo.slave.util;
+package com.cibobo.wooooo.activities.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

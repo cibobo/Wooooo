@@ -19,15 +19,16 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:+'
-
+    compile 'com.android.support:appcompat-v7:19.+'
     // You must install or update the Google Repository through the SDK manager to use this dependency.
     // The Google Repository (separate from the corresponding library) can be found in the Extras category.
     // compile 'com.google.android.gms:play-services:4.0.30'
-    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:support-v4:19.+'
     // You must install or update the Google Repository through the SDK manager to use this dependency.
     // The Google Repository (separate from the corresponding library) can be found in the Extras category.
     //
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'org.igniterealtime.smack:smack-android:4.1.0-alpha3'
+    compile 'org.igniterealtime.smack:smack-tcp:4.1.0-alpha3'
 }
 
