@@ -57,6 +57,15 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+        <service
+            android:name="com.cibobo.wooooo.service.android.TestIntentService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="com.cibobo.wooooo.service.android.MyService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

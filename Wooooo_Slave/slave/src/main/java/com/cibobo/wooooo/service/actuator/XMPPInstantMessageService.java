@@ -29,6 +29,7 @@ import java.io.IOException;
 
 /**
  * Created by Beibei on 15.10.2014.
+ * This class should not include any handler from android.os
  */
 public class XMPPInstantMessageService implements ConnectionService{
     //Constant String
@@ -46,8 +47,6 @@ public class XMPPInstantMessageService implements ConnectionService{
     private AbstractXMPPConnection connection = null;
 
     private String savedMessage;
-
-    private Handler testHandler = new Handler();
     /**
      * Create an instance of the XMPP Message Service
      * @return an Instance of the XMPP Instant Message Service
@@ -165,14 +164,6 @@ public class XMPPInstantMessageService implements ConnectionService{
                     @Override
                     public void processMessage(Chat chat, Message message) {
                         savedMessage = message.getBody();
-                        if(savedMessage!=null){
-                            context.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(context, "Received message: " + savedMessage, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
                     }
                 });
             }
