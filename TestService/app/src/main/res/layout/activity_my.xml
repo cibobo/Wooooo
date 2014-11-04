@@ -31,4 +31,12 @@
         android:id="@+id/btnStopSer"
         android:layout_below="@+id/btnInvokeMethod"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView"
+        android:layout_below="@+id/btnStopSer"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
