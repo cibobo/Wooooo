@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.cibobo.testservice.MyActivity"
+            android:name=".MyActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +18,12 @@
         </activity>
 
         <service
-            android:name="com.example.cibobo.testservice.MyService"
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".ThreadService"
             android:enabled="true"
             android:exported="true" >
         </service>
