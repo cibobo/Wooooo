@@ -13,7 +13,8 @@ import java.util.TimerTask;
 public class ThreadService extends Service {
     private final String tag="Test Multi Thread Service";
 
-    private ThreadBinder threadBinder;
+    //The binder must be initialized at first. Otherwise the onServiceConnected defined in ServiceConnection will not work.
+    private ThreadBinder threadBinder = new ThreadBinder();
 
     private Timer timer;
     private TimerTask timerTask;
@@ -40,6 +41,25 @@ public class ThreadService extends Service {
         public ThreadService getService(){
             return ThreadService.this;
         }
+
+        public void startThread(){
+            Log.i(tag, "Start Thread");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for(int i=0;i<10;i++){
+                        Log.e(tag, i + "th loop");
+                        synchronized (this) {
+                            try {
+                                wait(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }).start();
+        }
     }
 
     public ThreadService() {
@@ -54,6 +74,7 @@ public class ThreadService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        Log.i(tag, "Service created");
 //        Toast.makeText(MyActivity.this, "Service is started", Toast.LENGTH_SHORT).show();
     }
 
@@ -72,7 +93,24 @@ public class ThreadService extends Service {
 //        };
 //        timer.schedule(timerTask,100);
 
-        new Thread(runnable).start();
+//        new Thread(runnable).start();
+        Log.i(tag, "Service started");
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for(int i=0;i<10;i++){
+//                    Log.e(tag, i + "th loop");
+//                    synchronized (this) {
+//                        try {
+//                            wait(3000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        }).start();
+//        Log.i(tag, "thread working completed");
     }
 
     public String getCurrentTime(){

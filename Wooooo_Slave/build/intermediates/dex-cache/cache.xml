@@ -2,52 +2,64 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-tcp-4.1.0-alpha3-7410754fdc0592a67e28cfc3678f817e22b90a04.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-tcp\4.1.0-alpha3\4ef5f3e7c225813de9377e61145ec047bbc9cd69\smack-tcp-4.1.0-alpha3.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/classes-7657bd6561ac3504b140f3174ad5a28907687c72.jar"
+        jar="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="4ef5f3e7c225813de9377e61145ec047bbc9cd69"/>
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\jxmpp-util-cache-0.3.0-640c8d4cf630a4e28f8932a88fd8714f7dd54a25.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-util-cache\0.3.0\8a1440478536877abcd1e6fdaec8d0401c3530b8\jxmpp-util-cache-0.3.0.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/jxmpp-util-cache-0.3.0-2dbe3fe3112c0a313b6761f3a7d4d7a0a097c8ad.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-util-cache/0.3.0/8a1440478536877abcd1e6fdaec8d0401c3530b8/jxmpp-util-cache-0.3.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="8a1440478536877abcd1e6fdaec8d0401c3530b8"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\jxmpp-core-0.3.0-d24db2f664cf31f9579c959a7427fd09678e3990.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-core\0.3.0\8ec041f39f19b2ed09da74edbc269b2d28cc2502\jxmpp-core-0.3.0.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/smack-tcp-4.1.0-alpha3-8ebdbe11403b147f0cf5a0071d60065b345fbc96.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-tcp/4.1.0-alpha3/4ef5f3e7c225813de9377e61145ec047bbc9cd69/smack-tcp-4.1.0-alpha3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="4ef5f3e7c225813de9377e61145ec047bbc9cd69"/>
+    <item
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/support-v4-19.1.0-1bd09adae01d10f8f097a7c54535018843cfa550.jar"
+        jar="/opt/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/jxmpp-core-0.3.0-edf335eb9c3ccf544ba0b69ec17316b4622f04e9.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-core/0.3.0/8ec041f39f19b2ed09da74edbc269b2d28cc2502/jxmpp-core-0.3.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="8ec041f39f19b2ed09da74edbc269b2d28cc2502"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-core-4.1.0-alpha3-af0234409f5cd23bf7692f974f789a5422388341.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-core\4.1.0-alpha3\4591029940b157bd345dde7bd969da9d0eb5bd02\smack-core-4.1.0-alpha3.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/smack-android-4.1.0-alpha3-063750a5b93376ed738f56b677c749ac55930576.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-android/4.1.0-alpha3/5a72151b6dd7504abf72bccf5f9e86efe1045567/smack-android-4.1.0-alpha3.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="4591029940b157bd345dde7bd969da9d0eb5bd02"/>
+        sha1="5a72151b6dd7504abf72bccf5f9e86efe1045567"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-sasl-provided-4.1.0-alpha3-460ad53b003a3045d88c0e53d9fb4041f540b60d.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-sasl-provided\4.1.0-alpha3\2ad824c5dad786193825692cf6204fc8ecf80cbd\smack-sasl-provided-4.1.0-alpha3.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/smack-sasl-provided-4.1.0-alpha3-83d0209ef0ca95e17429f06932296bff129c0624.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-sasl-provided/4.1.0-alpha3/2ad824c5dad786193825692cf6204fc8ecf80cbd/smack-sasl-provided-4.1.0-alpha3.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="2ad824c5dad786193825692cf6204fc8ecf80cbd"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-resolver-minidns-4.1.0-alpha3-2473e63b4b54d12cab640bc3d96eed3d9e581d3d.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-resolver-minidns\4.1.0-alpha3\c8ac7d87e6f5a17feed27a8f3e7375f6ac9f4b8e\smack-resolver-minidns-4.1.0-alpha3.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/smack-core-4.1.0-alpha3-560ba831dd9d6c4c1d9050e9f7637a8c376960c9.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-core/4.1.0-alpha3/4591029940b157bd345dde7bd969da9d0eb5bd02/smack-core-4.1.0-alpha3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="4591029940b157bd345dde7bd969da9d0eb5bd02"/>
+    <item
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/smack-resolver-minidns-4.1.0-alpha3-a06d0e3a197e0261df13fcb8d67a2c63d6f650f4.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-resolver-minidns/4.1.0-alpha3/c8ac7d87e6f5a17feed27a8f3e7375f6ac9f4b8e/smack-resolver-minidns-4.1.0-alpha3.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="c8ac7d87e6f5a17feed27a8f3e7375f6ac9f4b8e"/>
     <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\minidns-0.1.1-ec07217e710decd2baba46de6effb3bf2c1824e4.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\de.measite.minidns\minidns\0.1.1\f5fbbedfb66d4623f3a201eb3eda0e7c688bfb14\minidns-0.1.1.jar"
+        dex="/home/cibobo/Wooooo/Wooooo_Slave/slave/build/intermediates/pre-dexed/debug/minidns-0.1.1-3313a5cdff1ad08417d3c30ecaa7ea3efccae227.jar"
+        jar="/home/cibobo/.gradle/caches/modules-2/files-2.1/de.measite.minidns/minidns/0.1.1/f5fbbedfb66d4623f3a201eb3eda0e7c688bfb14/minidns-0.1.1.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="f5fbbedfb66d4623f3a201eb3eda0e7c688bfb14"/>
-    <item
-        dex="C:\Users\Cibobo\Documents\GitHub\Wooooo\Wooooo_Slave\slave\build\intermediates\pre-dexed\debug\smack-android-4.1.0-alpha3-c3e31e67f85c5bf7cd1f4f8d43995cb979327f6a.jar"
-        jar="C:\Users\Cibobo\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-android\4.1.0-alpha3\5a72151b6dd7504abf72bccf5f9e86efe1045567\smack-android-4.1.0-alpha3.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="5a72151b6dd7504abf72bccf5f9e86efe1045567"/>
 
 </pre-dex-items>

@@ -35,30 +35,7 @@ public class BeginActivity extends ActionBarActivity {
     private Button beginMasterButton;
 
     private Context context;
-    //private Intent serviceIntent;
 
-    public MessageServiceHandler messageServiceHandler;
-
-    private TestIntentService testService = null;
-    //private MyService testService;
-
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            testService = ((TestIntentService.TestIntentServiceLocalBinder)iBinder).getService();
-//            MyService.MyBinder myBinder = (MyService.MyBinder)iBinder;
-//            testService = myBinder.getService();
-            if(testService==null){
-                Toast.makeText(context,"Service is null", Toast.LENGTH_SHORT);
-            }
-            testService.setHandler(messageServiceHandler);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            testService = null;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,41 +44,15 @@ public class BeginActivity extends ActionBarActivity {
 
         context = this;
 
-        messageServiceHandler = new MessageServiceHandler(Looper.getMainLooper());
-
-        Intent serviceIntent = new Intent(context, TestIntentService.class);
-        //Intent serviceIntent = new Intent(BeginActivity.this, MyService.class);
-        bindService(serviceIntent, serviceConnection, Service.BIND_AUTO_CREATE);
-       // this.startService(serviceIntent);
-
         beginSlaveButton = (Button) this.findViewById(R.id.buttonSlave);
         beginMasterButton = (Button) this.findViewById(R.id.buttonMaster);
 
-        /*
-         * Test code for Thread+service
-         */
-//        Runnable r = new Runnable() {
-//            @Override
-//            public void run() {
-//                if(testService==null){
-//                    Toast.makeText(context,"Service is null", Toast.LENGTH_SHORT);
-//                    Log.e("Test Service", "Test service is null");
-//                }
-//                beginSlaveButton.setText(testService.testString);
-//            }
-//        };
-//        this.messageServiceHandler.postDelayed(r, 400L);
 
         beginSlaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(testService==null){
-                    Toast.makeText(getApplicationContext(),"Service is null", Toast.LENGTH_SHORT).show();
-                    Log.e("Test Service", "Test service is null");
-                }
-                Toast.makeText(context,testService.testString, Toast.LENGTH_SHORT).show();
-//                Intent slaveIntent = new Intent(context, SlaveActivity.class);
-//                context.startActivity(slaveIntent);
+                Intent slaveIntent = new Intent(context, SlaveActivity.class);
+                context.startActivity(slaveIntent);
              //XMPPInstantMessageService.getInstance().sendMessage();
             }
         });
@@ -129,19 +80,4 @@ public class BeginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Handler to handle the change request of the UI from the MessageService
-     */
-    private final class MessageServiceHandler extends Handler{
-        public MessageServiceHandler(Looper looper){
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Log.i("Begin Activity Message", "Service is running "+msg.what);
-            Toast.makeText(context, "Handle the message from Message Service "+msg.what, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

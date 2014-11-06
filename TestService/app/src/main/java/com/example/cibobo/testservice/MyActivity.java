@@ -44,10 +44,11 @@ public class MyActivity extends Activity {
             //MyService.LocalBinder binder=(MyService.LocalBinder)service;
             //mService=binder.getService();
             ThreadService.ThreadBinder binder = (ThreadService.ThreadBinder)service;
-            threadService = binder.getService();
-            if(threadService==null){
-                Toast.makeText(MyActivity.this, "Service is null", Toast.LENGTH_SHORT).show();
-            }
+//            threadService = binder.getService();
+//            if(threadService==null){
+//                Toast.makeText(MyActivity.this, "Service is null", Toast.LENGTH_SHORT).show();
+//            }
+            binder.startThread();
          }
     };
 
@@ -61,43 +62,45 @@ public class MyActivity extends Activity {
 
         textView = (TextView)findViewById(R.id.textView);
 
-//        btnStart.setOnClickListener(onclick);
-//        btnInvoke.setOnClickListener(onclick);
-//        btnStop.setOnClickListener(onclick);
+        btnStart.setOnClickListener(onclick);
+        btnInvoke.setOnClickListener(onclick);
+        btnStop.setOnClickListener(onclick);
 
         Intent threadServiceIntent = new Intent(MyActivity.this, ThreadService.class);
-        bindService(threadServiceIntent, mConnection, Service.BIND_AUTO_CREATE);
+        //bindService(threadServiceIntent, mConnection, Service.BIND_AUTO_CREATE);
         //this.startService(threadServiceIntent);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Runnable r=new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    if (threadService != null) {
-                        Toast.makeText(MyActivity.this, "Get the service time " + threadService.getCurrentTime(), Toast.LENGTH_SHORT).show();
-                        textView.setText(threadService.getCurrentTime());
-                    } else {
-                        Log.e(tag, "The service is null");
-                    }
-                }
-            }
-        };
-        handler.postDelayed(r, 400L);
+//        Runnable r=new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true) {
+//                    if (threadService != null) {
+//                        Toast.makeText(MyActivity.this, "Get the service time " + threadService.getCurrentTime(), Toast.LENGTH_SHORT).show();
+//                        textView.setText(threadService.getCurrentTime());
+//                    } else {
+//                        Log.e(tag, "The service is null");
+//                    }
+//                }
+//            }
+//        };
+//        handler.postDelayed(r, 400L);
     }
 
-    //    View.OnClickListener onclick = new View.OnClickListener() {
-//
-//        @Override
-//        public void onClick(View v) {
-//            switch (v.getId()) {
-//                case R.id.btnStartSer:
-//                   Toast.makeText(getApplicationContext(), "绑定服务成功", Toast.LENGTH_SHORT).show();
-//                   bindService(new Intent(MyActivity.this,MyService.class),mConnection, Service.BIND_AUTO_CREATE);
-//                   break;
+        View.OnClickListener onclick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btnStartSer:
+                   Toast.makeText(getApplicationContext(), "绑定服务成功", Toast.LENGTH_SHORT).show();
+                   Intent threadServiceIntent = new Intent(MyActivity.this, ThreadService.class);
+                   bindService(threadServiceIntent,mConnection, Service.BIND_AUTO_CREATE);
+                   MyActivity.this.startService(threadServiceIntent);
+                   break;
 //               case R.id.btnInvokeMethod:
 //                   if(mService==null){
 //                        Toast.makeText(getApplicationContext(), "请先绑定服务", Toast.LENGTH_SHORT).show();
@@ -107,16 +110,16 @@ public class MyActivity extends Activity {
 //                   int iResult=mService.getMultipleNum(10);
 //                   Toast.makeText(getApplicationContext(), "服务计算结果为："+iResult, Toast.LENGTH_SHORT).show();
 //                   break;
-//               case R.id.btnStopSer:
-//                   Toast.makeText(getApplicationContext(), "服务解除绑定", Toast.LENGTH_SHORT).show();
-//                   unbindService(mConnection);
-//                   mService=null;
-//                   break;
-//                default:
-//                   break;
-//            }
-//        }
-//    };
+               case R.id.btnStopSer:
+                   Toast.makeText(getApplicationContext(), "服务解除绑定", Toast.LENGTH_SHORT).show();
+                   unbindService(mConnection);
+                   mService=null;
+                   break;
+                default:
+                   break;
+            }
+        }
+    };
 
 
 
