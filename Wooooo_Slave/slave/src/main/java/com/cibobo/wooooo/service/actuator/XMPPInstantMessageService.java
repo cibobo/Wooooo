@@ -33,7 +33,7 @@ import java.io.IOException;
  */
 public class XMPPInstantMessageService implements ConnectionService{
     //Constant String
-    private String XMPP_LOG_TITLE = "XMPPInstantMessageService";
+    private String tag = "XMPPInstantMessageService";
 
     private static XMPPInstantMessageService serviceInstance = null;
 
@@ -46,7 +46,96 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     private AbstractXMPPConnection connection = null;
 
+    private XMPPInstantMessageReceiveThread messageReceiverThread = null;
+    private long threadID;
+
     private String savedMessage;
+
+    private Runnable autoAnswerRunnable;
+
+    private XMPPInstantMessageService(){
+        autoAnswerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.i(tag, "begin run");
+//                ChatManager chatManager = ChatManager.getInstanceFor(connection);
+//                synchronized (this) {
+//                    chatManager.addChatListener(new ChatManagerListener() {
+//                        @Override
+//                        public void chatCreated(Chat chat, boolean createdLocally) {
+//                            chat.addMessageListener(new MessageListener() {
+//                                @Override
+//                                public void processMessage(Chat chat, Message message) {
+//                                    savedMessage = message.getBody();
+//                                    Log.e(tag, "Receive message: " + savedMessage);
+//                                    message.setBody("Repeat" + savedMessage);
+//                                    try {
+//                                        connection.sendPacket(message);
+//                                    } catch (SmackException.NotConnectedException e) {
+//                                        Log.e(tag, e.toString());
+//                                    }
+//                                }
+//                            });
+//                        }
+//                    });
+//                }
+                //Filter for received message: only accept message not null
+                PacketFilter filter = new PacketFilter() {
+                    @Override
+                    public boolean accept(Packet packet) {
+                        if(packet!=null && packet instanceof Message) {
+                            return true;
+                        } else {
+                            Log.d(tag, "Received a null message or other type of packet");
+                            return false;
+                        }
+                    }
+                };
+                if(connection != null) {
+                    Log.i(tag, "checked connection");
+
+                    connection.addPacketListener(new PacketListener() {
+                        @Override
+                        public void processPacket(Packet packet){
+                            Log.d(tag, "process packet called");
+                            Message message = (Message) packet;
+                            /*
+                             *@message: the listener receive every time two messages: the first one contains the content but the second one contains null as body.
+                             * So a judgement must be created here to deal with the second message.
+                             */
+                            if(message.getBody()==null){
+                                Log.e(tag, "Received message contains null");
+                            } else {
+                                if (message.getBody().equals("cibobo")) {
+                                    autoAnswer(packet);
+                                }
+                            }
+                        }
+                    }, filter);
+
+                } else {
+                    Log.i(tag, "connection is null!!!!");
+                }
+
+//                for(int i=0;i<10;i++) {
+//                    synchronized (this) {
+//                        try {
+//                            wait(1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    sendMessage();
+//                    Log.e(tag, "Receive message: " + i);
+//                }
+
+            }
+        };
+//        messageReceiverThread = new Thread(autoAnswerRunnable);
+
+    }
+
+
     /**
      * Create an instance of the XMPP Message Service
      * @return an Instance of the XMPP Instant Message Service
@@ -63,6 +152,16 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     }
 
+    public AbstractXMPPConnection getConnection(){
+        return this.connection;
+    }
+
+    public Message createMessage(){
+        Message message = new Message(targetUser);
+        return message;
+    }
+
+
     @Override
     public void sendMessage() {
         Message message = new Message(targetUser);
@@ -70,7 +169,7 @@ public class XMPPInstantMessageService implements ConnectionService{
         try {
             connection.sendPacket(message);
         } catch (SmackException.NotConnectedException e) {
-            Log.e(XMPP_LOG_TITLE, e.toString());
+            Log.e(tag, e.toString());
         }
     }
 
@@ -100,6 +199,26 @@ public class XMPPInstantMessageService implements ConnectionService{
         return savedMessage;
     }
 
+    public void startReceiverThread(){
+        if(messageReceiverThread == null) {
+            messageReceiverThread = new XMPPInstantMessageReceiveThread();
+            messageReceiverThread.start();
+        } else {
+            messageReceiverThread.resumeThread();
+        }
+        Log.e(tag, "current thread ID = " + messageReceiverThread.getId());
+
+    }
+
+
+
+    public void removeReceiverThread(){
+        if(this.messageReceiverThread!=null){
+            messageReceiverThread.suspendThread();
+        }
+
+    }
+
     @Override
     public boolean connect(String username, String password) {
         /*
@@ -112,21 +231,21 @@ public class XMPPInstantMessageService implements ConnectionService{
 
         try {
             connection.connect();
-            Log.i(XMPP_LOG_TITLE, "Connect to " + connection.getHost());
+            Log.i(tag, "Connect to " + connection.getHost());
             //TODO: using the input username and password
             connection.login(this.username,this.password);
-            Log.i(XMPP_LOG_TITLE,"Login as " + connection.getUser());
+            Log.i(tag,"Login as " + connection.getUser());
 
-            Presence presence = new Presence(Presence.Type.unavailable);
+            Presence presence = new Presence(Presence.Type.available);
             connection.sendPacket(presence);
         } catch (SmackException e) {
-            Log.e(XMPP_LOG_TITLE, e.toString());
+            Log.e(tag, e.toString());
             return false;
         } catch (IOException e) {
-            Log.e(XMPP_LOG_TITLE, e.toString());
+            Log.e(tag, e.toString());
             return false;
         } catch (XMPPException e) {
-            Log.e(XMPP_LOG_TITLE, e.toString());
+            Log.e(tag, e.toString());
             return false;
         }
         return true;
@@ -147,6 +266,21 @@ public class XMPPInstantMessageService implements ConnectionService{
         }, filter);
     }
 
+    public void autoAnswer(Packet packet){
+        Message message = (Message) packet;
+        savedMessage = message.getBody();
+        Log.d(tag, "receive package: " + ((Message) packet).getType());
+        Log.d(tag, "Receive message: " + savedMessage);
+
+        Message answer = this.createMessage();
+        answer.setBody("Received: " + savedMessage);
+        try {
+            connection.sendPacket((Packet)answer);
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getUsername(){
         return this.username;
     }
@@ -155,18 +289,4 @@ public class XMPPInstantMessageService implements ConnectionService{
         return this.savedMessage;
     }
 
-    public void testReceiver(final Context context){
-        ChatManager chatManager = ChatManager.getInstanceFor(connection);
-        chatManager.addChatListener(new ChatManagerListener() {
-            @Override
-            public void chatCreated(Chat chat, boolean createdLocally) {
-                chat.addMessageListener(new MessageListener() {
-                    @Override
-                    public void processMessage(Chat chat, Message message) {
-                        savedMessage = message.getBody();
-                    }
-                });
-            }
-        });
-    }
 }

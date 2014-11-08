@@ -51,7 +51,7 @@ public class SlaveActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
-    private String SLAVE_ACTIVITY_LOG_TITLE = "SlaveActivity";
+    private String tag = "SlaveActivity";
     private Context context;
     private final Handler handler = new Handler();
 
@@ -125,38 +125,21 @@ public class SlaveActivity extends Activity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        /*
-         * Create a new thread to answer the message from Master Client
-         */
-//        Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                XMPPInstantMessageService.getInstance().autoAnswer();
-//                try {
-//                    wait(3000);
-//                } catch (InterruptedException e) {
-//                    Log.e(SLAVE_ACTIVITY_LOG_TITLE, e.toString());
-//                }
-//            }
-//        });
-//        thread.start();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(context, "Start", Toast.LENGTH_SHORT);
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-//                String receivedMessage = (String)XMPPInstantMessageService.getInstance().receiveMessage();
-//                Toast.makeText(context, receivedMessage, Toast.LENGTH_SHORT);
-//                Log.i(SLAVE_ACTIVITY_LOG_TITLE, "Get the message from GTalk " + receivedMessage);
-                XMPPInstantMessageService.getInstance().autoAnswer();
-                Toast.makeText(context, "Run Automatic answer service", Toast.LENGTH_SHORT);
-            }
-        };
-        handler.postDelayed(runnable,400L);
+        Log.d(tag, "On Start");
+
+        XMPPInstantMessageService.getInstance().createReceiverThread();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(tag, "On Stop");
+        XMPPInstantMessageService.getInstance().removeReceiverThread();
     }
 
     @Override
