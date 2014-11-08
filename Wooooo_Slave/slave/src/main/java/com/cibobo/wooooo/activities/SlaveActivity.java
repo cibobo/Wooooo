@@ -132,14 +132,14 @@ public class SlaveActivity extends Activity {
         super.onStart();
         Log.d(tag, "On Start");
 
-        XMPPInstantMessageService.getInstance().createReceiverThread();
+        XMPPInstantMessageService.getInstance().startReceiverThread();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(tag, "On Stop");
-        XMPPInstantMessageService.getInstance().removeReceiverThread();
+        XMPPInstantMessageService.getInstance().stopReceiverThread();
     }
 
     @Override

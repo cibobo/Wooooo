@@ -16,9 +16,14 @@ import org.jivesoftware.smack.packet.Packet;
 public class XMPPInstantMessageReceiveThread extends Thread {
     private final String tag = "XMPPInstantMessageReceiveThread";
 
-    private final Object Monitor = new Object();
+    //Monitor can be replaced by this pointer.
+    //private final Object Monitor = new Object();
     private boolean pauseFlag = false;
 
+    /*
+     *@message: the initialization of XMPPInstantmessageReceiveThread can not be done in the constructor of XMPPInstantMessageService,
+     * because there is an Instant of Service defined inside of Thread.
+     */
     private XMPPInstantMessageService messageService;
 
     private AbstractXMPPConnection connection;
@@ -30,6 +35,7 @@ public class XMPPInstantMessageReceiveThread extends Thread {
 
     @Override
     public void run() {
+        //create a normal packet filter to filter out only message packet.
         PacketFilter filter = new PacketFilter() {
             @Override
             public boolean accept(Packet packet) {
@@ -58,6 +64,7 @@ public class XMPPInstantMessageReceiveThread extends Thread {
                     if (message.getBody() == null) {
                         Log.e(tag, "Received message contains null");
                     } else {
+                        //TODO: If receive a key,send current GPS back
                         if (message.getBody().equals("cibobo")) {
                             messageService.autoAnswer(packet);
                         }

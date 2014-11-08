@@ -47,12 +47,15 @@ public class XMPPInstantMessageService implements ConnectionService{
     private AbstractXMPPConnection connection = null;
 
     private XMPPInstantMessageReceiveThread messageReceiverThread = null;
-    private long threadID;
 
     private String savedMessage;
 
-    private Runnable autoAnswerRunnable;
+    //private Runnable autoAnswerRunnable;
 
+    /**
+     * Old implementation with runnable
+     */
+/*
     private XMPPInstantMessageService(){
         autoAnswerRunnable = new Runnable() {
             @Override
@@ -99,10 +102,6 @@ public class XMPPInstantMessageService implements ConnectionService{
                         public void processPacket(Packet packet){
                             Log.d(tag, "process packet called");
                             Message message = (Message) packet;
-                            /*
-                             *@message: the listener receive every time two messages: the first one contains the content but the second one contains null as body.
-                             * So a judgement must be created here to deal with the second message.
-                             */
                             if(message.getBody()==null){
                                 Log.e(tag, "Received message contains null");
                             } else {
@@ -132,9 +131,8 @@ public class XMPPInstantMessageService implements ConnectionService{
             }
         };
 //        messageReceiverThread = new Thread(autoAnswerRunnable);
-
     }
-
+*/
 
     /**
      * Create an instance of the XMPP Message Service
@@ -152,13 +150,36 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     }
 
-    public AbstractXMPPConnection getConnection(){
-        return this.connection;
-    }
+    @Override
+    public boolean connect(String username, String password) {
+        /*
+         * Message: Google has recently switched to not allowing PLAIN and similar methods on its accounts.
+         * If you still want to use the auth mechanism created by smack, the account must be enabled during
+         * https://www.google.com/settings/security/lesssecureapps
+         */
+        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
+        connection = new XMPPTCPConnection(connectionConfiguration);
 
-    public Message createMessage(){
-        Message message = new Message(targetUser);
-        return message;
+        try {
+            connection.connect();
+            Log.i(tag, "Connect to " + connection.getHost());
+            //TODO: using the input username and password
+            connection.login(this.username,this.password);
+            Log.i(tag,"Login as " + connection.getUser());
+
+            Presence presence = new Presence(Presence.Type.available);
+            connection.sendPacket(presence);
+        } catch (SmackException e) {
+            Log.e(tag, e.toString());
+            return false;
+        } catch (IOException e) {
+            Log.e(tag, e.toString());
+            return false;
+        } catch (XMPPException e) {
+            Log.e(tag, e.toString());
+            return false;
+        }
+        return true;
     }
 
 
@@ -199,57 +220,54 @@ public class XMPPInstantMessageService implements ConnectionService{
         return savedMessage;
     }
 
+    /**
+     * Return the current connection
+     * @return current connection
+     */
+    public AbstractXMPPConnection getConnection(){
+        return this.connection;
+    }
+
+    /**
+     * Create a standard message with defined receiver
+     * @return standard message
+     */
+    public Message createMessage(){
+        Message message = new Message(targetUser);
+        return message;
+    }
+
+
+    /**
+     * Start the receiver thread; if it is the first time to start it, create a new instant.
+     */
     public void startReceiverThread(){
         if(messageReceiverThread == null) {
+            /*
+             *@message: because messageReceiverThread contains an Instance of XMPPInstantMessageService, the initialization of thread can not be done in the constructor of service
+             */
             messageReceiverThread = new XMPPInstantMessageReceiveThread();
             messageReceiverThread.start();
         } else {
             messageReceiverThread.resumeThread();
         }
-        Log.e(tag, "current thread ID = " + messageReceiverThread.getId());
+        Log.i(tag, "current thread ID = " + messageReceiverThread.getId());
 
     }
 
 
-
-    public void removeReceiverThread(){
+    /**
+     * Stop the current thread. Only suspend the thread but not destroy it.
+     * The same thread can be resumed during the next call of startReceiverThread
+     */
+    public void stopReceiverThread(){
         if(this.messageReceiverThread!=null){
             messageReceiverThread.suspendThread();
         }
 
     }
 
-    @Override
-    public boolean connect(String username, String password) {
-        /*
-         * Message: Google has recently switched to not allowing PLAIN and similar methods on its accounts.
-         * If you still want to use the auth mechanism created by smack, the account must be enabled during
-         * https://www.google.com/settings/security/lesssecureapps
-         */
-        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
-        connection = new XMPPTCPConnection(connectionConfiguration);
 
-        try {
-            connection.connect();
-            Log.i(tag, "Connect to " + connection.getHost());
-            //TODO: using the input username and password
-            connection.login(this.username,this.password);
-            Log.i(tag,"Login as " + connection.getUser());
-
-            Presence presence = new Presence(Presence.Type.available);
-            connection.sendPacket(presence);
-        } catch (SmackException e) {
-            Log.e(tag, e.toString());
-            return false;
-        } catch (IOException e) {
-            Log.e(tag, e.toString());
-            return false;
-        } catch (XMPPException e) {
-            Log.e(tag, e.toString());
-            return false;
-        }
-        return true;
-    }
 
     public void autoAnswer(){
         PacketFilter filter = new PacketTypeFilter(Message.class);
