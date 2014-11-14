@@ -1,30 +1,15 @@
 package com.cibobo.wooooo.activities;
 
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
-import com.cibobo.wooooo.service.android.MessageService;
-import com.cibobo.wooooo.service.android.MyService;
-import com.cibobo.wooooo.service.android.TestIntentService;
 import com.cibobo.wooooo.slave.R;
-
-import java.io.Serializable;
 
 
 public class BeginActivity extends ActionBarActivity {
@@ -51,7 +36,8 @@ public class BeginActivity extends ActionBarActivity {
         beginSlaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent slaveIntent = new Intent(context, SlaveActivity.class);
+                Intent slaveIntent = new Intent(context, LocationActivity.class);
+                //Intent slaveIntent = new Intent(context, SlaveActivity.class);
                 context.startActivity(slaveIntent);
              //XMPPInstantMessageService.getInstance().sendMessage();
             }

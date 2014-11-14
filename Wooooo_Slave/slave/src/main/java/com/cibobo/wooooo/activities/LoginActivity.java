@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.asynctasks.UserVerification;
+import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.slave.R;
 
 public class LoginActivity extends ActionBarActivity {
@@ -96,4 +97,9 @@ public class LoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        XMPPInstantMessageService.getInstance().disconnection();
+        super.onDestroy();
+    }
 }

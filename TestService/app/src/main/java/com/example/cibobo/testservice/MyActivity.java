@@ -100,8 +100,9 @@ public class MyActivity extends Activity {
                    Intent threadServiceIntent = new Intent(MyActivity.this, ThreadService.class);
                    bindService(threadServiceIntent,mConnection, Service.BIND_AUTO_CREATE);
                    MyActivity.this.startService(threadServiceIntent);
+
                    break;
-//               case R.id.btnInvokeMethod:
+//                case R.id.btnInvokeMethod:
 //                   if(mService==null){
 //                        Toast.makeText(getApplicationContext(), "请先绑定服务", Toast.LENGTH_SHORT).show();
 //                        return;
@@ -109,7 +110,7 @@ public class MyActivity extends Activity {
 //                   // 调用绑定服务上的方法，进行数据交互
 //                   int iResult=mService.getMultipleNum(10);
 //                   Toast.makeText(getApplicationContext(), "服务计算结果为："+iResult, Toast.LENGTH_SHORT).show();
-//                   break;
+//                    break;
                case R.id.btnStopSer:
                    Toast.makeText(getApplicationContext(), "服务解除绑定", Toast.LENGTH_SHORT).show();
                    unbindService(mConnection);

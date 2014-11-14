@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.activities.BeginActivity;
+import com.cibobo.wooooo.service.actuator.XMPPInstantMessageReceiveThread;
+import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.service.connection.ConnectionService;
 import com.cibobo.wooooo.service.connection.ConnectionServiceFactory;
 import com.cibobo.wooooo.slave.R;
@@ -38,7 +40,8 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
             return null;
         }
 */
-        connectionService = ConnectionServiceFactory.createXMPPInstantMessageService();
+
+        connectionService = XMPPInstantMessageService.getInstance();
         boolean isConnectSuccessful = connectionService.connect(currentUser.getUserName(), currentUser.getPassWord());
 
         if(isConnectSuccessful){

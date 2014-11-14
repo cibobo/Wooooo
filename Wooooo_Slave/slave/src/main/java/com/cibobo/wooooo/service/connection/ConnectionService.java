@@ -9,7 +9,13 @@ public interface ConnectionService {
 
     public boolean connect(String username, String password);
 
+    public void disconnection();
+
     public void sendMessage();
 
     public Object receiveMessage();
+
+    public void startReceiverThread();
+
+    public void stopReceiverThread();
 }

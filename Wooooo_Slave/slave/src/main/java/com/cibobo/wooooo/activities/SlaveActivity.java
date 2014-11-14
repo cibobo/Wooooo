@@ -2,14 +2,21 @@ package com.cibobo.wooooo.activities;
 
 import com.cibobo.wooooo.activities.util.SystemUiHider;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
+import com.cibobo.wooooo.service.android.MessageService;
 import com.cibobo.wooooo.slave.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,9 +58,23 @@ public class SlaveActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
-    private String tag = "SlaveActivity";
+    private final String tag = "SlaveActivity";
     private Context context;
-    private final Handler handler = new Handler();
+    private Intent messageServiceIntent;
+
+    private ServiceConnection messageServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            MessageService.MessageServiceBinder messageServiceBinder = (MessageService.MessageServiceBinder)iBinder;
+            messageServiceBinder.startMessageReceiver();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +146,9 @@ public class SlaveActivity extends Activity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
+        //Create the service
+        messageServiceIntent = new Intent(SlaveActivity.this, MessageService.class);
+
     }
 
     @Override
@@ -132,15 +156,9 @@ public class SlaveActivity extends Activity {
         super.onStart();
         Log.d(tag, "On Start");
 
-        XMPPInstantMessageService.getInstance().startReceiverThread();
+        bindService(messageServiceIntent, messageServiceConnection, Service.BIND_AUTO_CREATE);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(tag, "On Stop");
-        XMPPInstantMessageService.getInstance().stopReceiverThread();
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -151,6 +169,23 @@ public class SlaveActivity extends Activity {
         // are available.
         delayedHide(100);
     }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(tag, "On Stop");
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        Log.d(tag, "On Destroy");
+        //Unbind service only when the complete APP is closed. Service will stop the receiver thread.
+        unbindService(messageServiceConnection);
+        super.onDestroy();
+    }
+
 
 
     /**

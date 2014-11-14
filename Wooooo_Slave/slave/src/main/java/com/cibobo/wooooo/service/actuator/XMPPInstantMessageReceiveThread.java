@@ -4,9 +4,13 @@ import android.util.Log;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
+
+import java.io.IOException;
 
 /**
  * Created by cibobo on 11/8/14.
@@ -48,32 +52,35 @@ public class XMPPInstantMessageReceiveThread extends Thread {
             }
         };
         if(connection != null) {
-            Log.i(tag, "checked connection");
+            if(connection.isConnected()) {
+                Log.d(tag, "checked connection");
 
-            connection.addPacketListener(new PacketListener() {
-                @Override
-                public void processPacket(Packet packet){
-                    //Call checkpause to freeze the current thread.
-                    Log.d(tag, "process packet called");
-                    checkPause();
-                    Message message = (Message) packet;
+                connection.addPacketListener(new PacketListener() {
+                    @Override
+                    public void processPacket(Packet packet) {
+                        //Call checkPause to freeze the current thread.
+                        Log.d(tag, "process packet called");
+                        checkPause();
+                        Message message = (Message) packet;
                     /*
                      *@message: the listener receive every time two messages: the first one contains the content but the second one contains null as body.
                      * So a judgement must be created here to deal with the second message.
                      */
-                    if (message.getBody() == null) {
-                        Log.e(tag, "Received message contains null");
-                    } else {
-                        //TODO: If receive a key,send current GPS back
-                        if (message.getBody().equals("cibobo")) {
-                            messageService.autoAnswer(packet);
+                        if (message.getBody() == null) {
+                            Log.e(tag, "Received message contains null");
+                        } else {
+                            //TODO: If receive a key,send current GPS back
+                            if (message.getBody().equals("cibobo")) {
+                                messageService.autoAnswer(packet);
+                            }
                         }
                     }
-                }
-            }, filter);
-
+                }, filter);
+            } else {
+                messageService.connect(messageService.getUsername(),messageService.getPassword());
+            }
         } else {
-            Log.i(tag, "connection is null!!!!");
+            Log.d(tag, "connection is null!!!!");
         }
     }
 

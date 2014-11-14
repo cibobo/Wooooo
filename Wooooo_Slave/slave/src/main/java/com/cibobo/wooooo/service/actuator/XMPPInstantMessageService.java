@@ -1,12 +1,14 @@
 package com.cibobo.wooooo.service.actuator;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.cibobo.wooooo.service.connection.ConnectionService;
+import com.google.android.gms.location.LocationClient;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.Chat;
@@ -32,6 +34,7 @@ import java.io.IOException;
  * This class should not include any handler from android.os
  */
 public class XMPPInstantMessageService implements ConnectionService{
+
     //Constant String
     private String tag = "XMPPInstantMessageService";
 
@@ -50,89 +53,16 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     private String savedMessage;
 
-    //private Runnable autoAnswerRunnable;
+    //TODO: dummy realisation
+    public LocationClient locationClient;
 
-    /**
-     * Old implementation with runnable
-     */
-/*
+
     private XMPPInstantMessageService(){
-        autoAnswerRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Log.i(tag, "begin run");
-//                ChatManager chatManager = ChatManager.getInstanceFor(connection);
-//                synchronized (this) {
-//                    chatManager.addChatListener(new ChatManagerListener() {
-//                        @Override
-//                        public void chatCreated(Chat chat, boolean createdLocally) {
-//                            chat.addMessageListener(new MessageListener() {
-//                                @Override
-//                                public void processMessage(Chat chat, Message message) {
-//                                    savedMessage = message.getBody();
-//                                    Log.e(tag, "Receive message: " + savedMessage);
-//                                    message.setBody("Repeat" + savedMessage);
-//                                    try {
-//                                        connection.sendPacket(message);
-//                                    } catch (SmackException.NotConnectedException e) {
-//                                        Log.e(tag, e.toString());
-//                                    }
-//                                }
-//                            });
-//                        }
-//                    });
-//                }
-                //Filter for received message: only accept message not null
-                PacketFilter filter = new PacketFilter() {
-                    @Override
-                    public boolean accept(Packet packet) {
-                        if(packet!=null && packet instanceof Message) {
-                            return true;
-                        } else {
-                            Log.d(tag, "Received a null message or other type of packet");
-                            return false;
-                        }
-                    }
-                };
-                if(connection != null) {
-                    Log.i(tag, "checked connection");
-
-                    connection.addPacketListener(new PacketListener() {
-                        @Override
-                        public void processPacket(Packet packet){
-                            Log.d(tag, "process packet called");
-                            Message message = (Message) packet;
-                            if(message.getBody()==null){
-                                Log.e(tag, "Received message contains null");
-                            } else {
-                                if (message.getBody().equals("cibobo")) {
-                                    autoAnswer(packet);
-                                }
-                            }
-                        }
-                    }, filter);
-
-                } else {
-                    Log.i(tag, "connection is null!!!!");
-                }
-
-//                for(int i=0;i<10;i++) {
-//                    synchronized (this) {
-//                        try {
-//                            wait(1000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    sendMessage();
-//                    Log.e(tag, "Receive message: " + i);
-//                }
-
-            }
-        };
-//        messageReceiverThread = new Thread(autoAnswerRunnable);
+        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
+        connection = new XMPPTCPConnection(connectionConfiguration);
     }
-*/
+
+
 
     /**
      * Create an instance of the XMPP Message Service
@@ -157,9 +87,6 @@ public class XMPPInstantMessageService implements ConnectionService{
          * If you still want to use the auth mechanism created by smack, the account must be enabled during
          * https://www.google.com/settings/security/lesssecureapps
          */
-        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
-        connection = new XMPPTCPConnection(connectionConfiguration);
-
         try {
             connection.connect();
             Log.i(tag, "Connect to " + connection.getHost());
@@ -182,6 +109,18 @@ public class XMPPInstantMessageService implements ConnectionService{
         return true;
     }
 
+
+    //TODO: should create a asyncTask to disconnect the XMPP connection
+    //Error report: android.os.NetworkOnMainThreadException
+    //              at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1145)
+    @Override
+    public void disconnection() {
+        try {
+            connection.disconnect();
+        } catch (SmackException.NotConnectedException e) {
+            Log.e(tag,e.toString());
+        }
+    }
 
     @Override
     public void sendMessage() {
@@ -233,6 +172,7 @@ public class XMPPInstantMessageService implements ConnectionService{
      * @return standard message
      */
     public Message createMessage(){
+        //TODO: create a completed message, so that it can be accepted by other software using XMPP protocol, like Hangouts
         Message message = new Message(targetUser);
         return message;
     }
@@ -241,6 +181,7 @@ public class XMPPInstantMessageService implements ConnectionService{
     /**
      * Start the receiver thread; if it is the first time to start it, create a new instant.
      */
+    @Override
     public void startReceiverThread(){
         if(messageReceiverThread == null) {
             /*
@@ -260,6 +201,7 @@ public class XMPPInstantMessageService implements ConnectionService{
      * Stop the current thread. Only suspend the thread but not destroy it.
      * The same thread can be resumed during the next call of startReceiverThread
      */
+    @Override
     public void stopReceiverThread(){
         if(this.messageReceiverThread!=null){
             messageReceiverThread.suspendThread();
@@ -291,9 +233,18 @@ public class XMPPInstantMessageService implements ConnectionService{
         Log.d(tag, "Receive message: " + savedMessage);
 
         Message answer = this.createMessage();
-        answer.setBody("Received: " + savedMessage);
+
+        //TODO:Dummy realisation
+        Location currentLocation = locationClient.getLastLocation();
+        //answer.setBody(currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
+        //answer.setBody("Received: " + savedMessage);
+
+        //Try to use the original receive message
+        message.setTo(this.targetUser);
+        message.setBody(currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
+
         try {
-            connection.sendPacket((Packet)answer);
+            connection.sendPacket((Packet)message);
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
@@ -301,6 +252,10 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     public String getUsername(){
         return this.username;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     public Object getReceivedMessage(){
