@@ -36,8 +36,8 @@ public class BeginActivity extends ActionBarActivity {
         beginSlaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent slaveIntent = new Intent(context, LocationActivity.class);
-                //Intent slaveIntent = new Intent(context, SlaveActivity.class);
+                //Intent slaveIntent = new Intent(context, LocationActivity.class);
+                Intent slaveIntent = new Intent(context, SlaveActivity.class);
                 context.startActivity(slaveIntent);
              //XMPPInstantMessageService.getInstance().sendMessage();
             }

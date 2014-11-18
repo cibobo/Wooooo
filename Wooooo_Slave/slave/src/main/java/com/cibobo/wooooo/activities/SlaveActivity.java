@@ -1,6 +1,7 @@
 package com.cibobo.wooooo.activities;
 
 import com.cibobo.wooooo.activities.util.SystemUiHider;
+import com.cibobo.wooooo.provider.LocationManager;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.service.android.MessageService;
 import com.cibobo.wooooo.slave.R;
@@ -149,6 +150,9 @@ public class SlaveActivity extends Activity {
         //Create the service
         messageServiceIntent = new Intent(SlaveActivity.this, MessageService.class);
 
+        //Register the current activity to the LocationManager
+        LocationManager.getInstant().registerActivity(SlaveActivity.this);
+        LocationManager.getInstant().connection();
     }
 
     @Override
@@ -183,6 +187,8 @@ public class SlaveActivity extends Activity {
         Log.d(tag, "On Destroy");
         //Unbind service only when the complete APP is closed. Service will stop the receiver thread.
         unbindService(messageServiceConnection);
+        //Disconnect the location Manager
+        LocationManager.getInstant().disconnection();
         super.onDestroy();
     }
 

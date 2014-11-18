@@ -55,8 +55,8 @@ GooglePlayServicesClient.OnConnectionFailedListener{
     private ServiceConnection messageServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            MessageService.MessageServiceBinder messageServiceBinder = (MessageService.MessageServiceBinder)iBinder;
-            messageServiceBinder.startLocationMessageReceiver(mLocationClient);
+//            MessageService.MessageServiceBinder messageServiceBinder = (MessageService.MessageServiceBinder)iBinder;
+//            messageServiceBinder.startLocationMessageReceiver(mLocationClient);
         }
 
         @Override

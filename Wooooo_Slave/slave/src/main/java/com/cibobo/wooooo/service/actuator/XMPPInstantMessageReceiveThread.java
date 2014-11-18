@@ -69,7 +69,6 @@ public class XMPPInstantMessageReceiveThread extends Thread {
                         if (message.getBody() == null) {
                             Log.e(tag, "Received message contains null");
                         } else {
-                            //TODO: If receive a key,send current GPS back
                             if (message.getBody().equals("cibobo")) {
                                 messageService.autoAnswer(packet);
                             }

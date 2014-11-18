@@ -28,14 +28,10 @@ public class MessageService extends Service {
             XMPPInstantMessageService.getInstance().startReceiverThread();
         }
 
-        public void stopMessageReceiver(){
-
-        }
-
-        public void startLocationMessageReceiver(LocationClient inputClient){
-            XMPPInstantMessageService.getInstance().locationClient = inputClient;
-            XMPPInstantMessageService.getInstance().startReceiverThread();
-        }
+//        public void startLocationMessageReceiver(LocationClient inputClient){
+//            XMPPInstantMessageService.getInstance().locationClient = inputClient;
+//            XMPPInstantMessageService.getInstance().startReceiverThread();
+//        }
     }
 
     public MessageService() {
@@ -49,10 +45,10 @@ public class MessageService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.d(tag, "Stop the Message Receiver");
         //The receiver thread should be stopped if the slave activity is destroyed.
         XMPPInstantMessageService.getInstance().stopReceiverThread();
+        super.onDestroy();
     }
 
     @Override

@@ -63,10 +63,12 @@ public class ThreadService extends Service {
     }
 
     public ThreadService() {
-    }
+
+}
 
     @Override
     public IBinder onBind(Intent intent) {
+        Log.e(tag, "On bind is calling");
         return this.threadBinder;
     }
 

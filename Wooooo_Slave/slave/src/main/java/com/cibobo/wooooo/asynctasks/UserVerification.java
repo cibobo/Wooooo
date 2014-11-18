@@ -54,6 +54,7 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
     }
 
     protected void onPostExecute(UserData user){
+        //TODO: should add the judgement about the network situation
         if(user != null){
             Intent mainIntent = new Intent(context, BeginActivity.class);
             context.startActivity(mainIntent);

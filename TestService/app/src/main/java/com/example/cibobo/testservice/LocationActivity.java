@@ -71,8 +71,12 @@ GooglePlayServicesClient.OnConnectionFailedListener{
             @Override
             public void onClick(View view) {
                 Location currentLocation;
-                currentLocation = mLocationClient.getLastLocation();
-                String outputString = "(" + currentLocation.getLatitude() + ", " + currentLocation.getLongitude() + ")";
+                String outputString = "";
+                if(servicesConnected()) {
+                    currentLocation = mLocationClient.getLastLocation();
+                    outputString = "(" + currentLocation.getLatitude() + ", " + currentLocation.getLongitude() + ")";
+                }
+
                 locationTextView.setText(outputString);
                 Log.i(tag, outputString);
             }
@@ -139,6 +143,7 @@ GooglePlayServicesClient.OnConnectionFailedListener{
          * start a Google Play services activity that can resolve
          * error.
          */
+        Log.e(tag, "On connection failed");
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -258,6 +263,7 @@ GooglePlayServicesClient.OnConnectionFailedListener{
     }
 
     private boolean servicesConnected() {
+        Log.d(tag, "Check Service Connected");
         // Check that Google Play services is available
         int resultCode =
                 GooglePlayServicesUtil.

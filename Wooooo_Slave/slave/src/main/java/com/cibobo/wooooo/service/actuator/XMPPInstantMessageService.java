@@ -7,6 +7,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cibobo.wooooo.model.LocationMessageData;
 import com.cibobo.wooooo.service.connection.ConnectionService;
 import com.google.android.gms.location.LocationClient;
 
@@ -52,10 +53,6 @@ public class XMPPInstantMessageService implements ConnectionService{
     private XMPPInstantMessageReceiveThread messageReceiverThread = null;
 
     private String savedMessage;
-
-    //TODO: dummy realisation
-    public LocationClient locationClient;
-
 
     private XMPPInstantMessageService(){
         ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
@@ -110,12 +107,26 @@ public class XMPPInstantMessageService implements ConnectionService{
     }
 
 
-    //TODO: should create a asyncTask to disconnect the XMPP connection
-    //Error report: android.os.NetworkOnMainThreadException
-    //              at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1145)
+    //TODO: TO find out why after restart of the SW, it will be an AlreadyLoggedInException
+    //A possible solution is to keep the login state after the shut down of the App.
     @Override
     public void disconnection() {
         try {
+            if(serviceInstance.messageReceiverThread != null){
+                //Destroy the running Thread for message receiver
+                serviceInstance.messageReceiverThread.interrupt();
+                try {
+                    //wait 50ms until the thread going to die.
+                    serviceInstance.messageReceiverThread.join(50);
+                    Log.d(tag, "Killing thread");
+                } catch (InterruptedException e) {
+                    Log.e(tag, e.toString());
+                } finally {
+                    serviceInstance.messageReceiverThread = null;
+                }
+            } else {
+                Log.d(tag, "No thread to kill in disconnection");
+            }
             connection.disconnect();
         } catch (SmackException.NotConnectedException e) {
             Log.e(tag,e.toString());
@@ -209,42 +220,25 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     }
 
-
-
-    public void autoAnswer(){
-        PacketFilter filter = new PacketTypeFilter(Message.class);
-        connection.addPacketListener(new PacketListener() {
-            @Override
-            public void processPacket(Packet packet) throws SmackException.NotConnectedException {
-                Message message = (Message)packet;
-                String receivedMessage = message.getBody();
-                //TODO:should check whether the body of the received message doesn't contain any other infors.
-                if(receivedMessage.equals("cibobo")){
-                    sendMessage();
-                }
-            }
-        }, filter);
-    }
-
     public void autoAnswer(Packet packet){
         Message message = (Message) packet;
         savedMessage = message.getBody();
         Log.d(tag, "receive package: " + ((Message) packet).getType());
         Log.d(tag, "Receive message: " + savedMessage);
 
-        Message answer = this.createMessage();
+        //TODO: remove the fixed relationship between MessageService & LocationMassageData; need to find out a design pattern
+        LocationMessageData locationData = new LocationMessageData();
+        Log.d(tag, locationData.toString());
 
-        //TODO:Dummy realisation
-        Location currentLocation = locationClient.getLastLocation();
-        //answer.setBody(currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
-        //answer.setBody("Received: " + savedMessage);
+        Message answer = this.createMessage();
+        answer.setBody(locationData.toString());
 
         //Try to use the original receive message
-        message.setTo(this.targetUser);
-        message.setBody(currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
+//        message.setTo(this.targetUser);
+//        message.setBody(locationData.toString());
 
         try {
-            connection.sendPacket((Packet)message);
+            connection.sendPacket((Packet)answer);
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }

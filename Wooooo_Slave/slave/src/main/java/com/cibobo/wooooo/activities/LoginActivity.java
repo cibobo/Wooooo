@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cibobo.wooooo.asynctasks.MessageServiceDisconnection;
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.asynctasks.UserVerification;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
@@ -99,7 +100,9 @@ public class LoginActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-        XMPPInstantMessageService.getInstance().disconnection();
+        //XMPPInstantMessageService.getInstance().disconnection();
+        MessageServiceDisconnection messageServiceDisconnection = new MessageServiceDisconnection();
+        messageServiceDisconnection.execute(XMPPInstantMessageService.getInstance());
         super.onDestroy();
     }
 }
