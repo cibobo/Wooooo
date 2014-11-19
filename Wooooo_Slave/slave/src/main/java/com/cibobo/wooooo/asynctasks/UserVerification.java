@@ -3,7 +3,10 @@ package com.cibobo.wooooo.asynctasks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
@@ -18,7 +21,9 @@ import com.cibobo.wooooo.slave.R;
  * Created by Cibobo on 9/28/14.
  * User verification running in asynchronous task.
  */
-public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
+public class UserVerification extends AsyncTask<UserData, Integer, Boolean>{
+    private final String tag = "User Verification";
+
     //Context of the current activity, which will be used to star the new activity.
     private Context context;
 
@@ -31,15 +36,8 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
     }
 
     @Override
-    protected UserData doInBackground(UserData... users) {
+    protected Boolean doInBackground(UserData... users) {
         UserData currentUser = users[0];
-/*
-        if(currentUser.getUserName().equals("cibobo")){
-            return currentUser;
-        } else {
-            return null;
-        }
-*/
 
         connectionService = XMPPInstantMessageService.getInstance();
         boolean isConnectSuccessful = connectionService.connect(currentUser.getUserName(), currentUser.getPassWord());
@@ -47,19 +45,22 @@ public class UserVerification extends AsyncTask<UserData, Integer, UserData>{
         if(isConnectSuccessful){
             this.updateUserAccount(currentUser.getUserName(), currentUser.getPassWord());
 //            connectionService.sendMessage();
-            return currentUser;
+            return true;
         } else {
-            return null;
+            //@Message: Toast should not be used here to show the XMPP error.
+            // Otherwise you will get:
+            // java.lang.RuntimeException: An error occured while executing doInBackground()
+            //Toast.makeText(context, context.getString(R.string.login_error_XMPP), Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
-    protected void onPostExecute(UserData user){
-        //TODO: should add the judgement about the network situation
-        if(user != null){
+    protected void onPostExecute(Boolean isConnectSucceed){
+        if(isConnectSucceed){
             Intent mainIntent = new Intent(context, BeginActivity.class);
             context.startActivity(mainIntent);
         } else {
-            Toast.makeText(context, context.getString(R.string.ErrorMessage_Login), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.login_error_user), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -18,6 +18,9 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Cibobo on 11/17/2014.
+ * Singleton Class to provide the last updated location.
+ * In order to use the error dialog in case of no Google Play service or other mistakes, the current activity
+ * should be registered to the Location Manager
  */
 public class LocationManager implements
         GooglePlayServicesClient.ConnectionCallbacks,
@@ -70,7 +73,9 @@ public class LocationManager implements
 
     //Add Async Task for the update of the last location, to avoid timeout in the main thread.
     public Location getLastLocation(){
-        /*UpdateLocationAsyncTask updateLocationAsyncTask = new UpdateLocationAsyncTask();
+        //TODO: Need to create a mechanism to handle the situation, that no Location Data can be provided.
+        //One possible solution is using the periodic location update.
+        UpdateLocationAsyncTask updateLocationAsyncTask = new UpdateLocationAsyncTask();
         updateLocationAsyncTask.execute(locationClient);
         try {
             return updateLocationAsyncTask.get();
@@ -80,8 +85,8 @@ public class LocationManager implements
             Log.e(tag, e.toString());
         }
         Log.e(tag, "Failed to update the location");
-        return null;*/
-        return locationClient.getLastLocation();
+        return null;
+        //return locationClient.getLastLocation();
     }
 
     /**

@@ -7,6 +7,7 @@ import com.cibobo.wooooo.provider.LocationManager;
 
 /**
  * Created by Cibobo on 11/18/2014.
+ * The message data, which contains the current location information
  */
 public class LocationMessageData extends MessageData {
     private final String tag = "Location Message Data";
@@ -24,7 +25,7 @@ public class LocationMessageData extends MessageData {
             return locationString;
         } else {
             Log.e(tag, "Location is null");
-            return null;
+            return "Location is null";
         }
     }
 }

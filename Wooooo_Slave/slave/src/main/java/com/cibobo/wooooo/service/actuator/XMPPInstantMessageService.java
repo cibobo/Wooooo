@@ -18,6 +18,7 @@ import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.MessageTypeFilter;
@@ -41,8 +42,8 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     private static XMPPInstantMessageService serviceInstance = null;
 
-    private String username = "hiwi.fzi@googlemail.com";
-    private String password = "Karlsruhe";
+    private String username = null;
+    private String password = null;
     private String host = "talk.google.com";
     private String service = "gmail.com";
     private int port = 5222;
@@ -87,8 +88,9 @@ public class XMPPInstantMessageService implements ConnectionService{
         try {
             connection.connect();
             Log.i(tag, "Connect to " + connection.getHost());
-            //TODO: using the input username and password
-            connection.login(this.username,this.password);
+            Log.d(tag, "username: " + username + " | password: " +password);
+            //TODO: Should add some code to make sure, that if the password is wrong, the APP can still running correctly.
+            connection.login(username, password);
             Log.i(tag,"Login as " + connection.getUser());
 
             Presence presence = new Presence(Presence.Type.available);
@@ -103,6 +105,10 @@ public class XMPPInstantMessageService implements ConnectionService{
             Log.e(tag, e.toString());
             return false;
         }
+
+        this.username = username;
+        this.password = password;
+
         return true;
     }
 
@@ -227,6 +233,7 @@ public class XMPPInstantMessageService implements ConnectionService{
         Log.d(tag, "Receive message: " + savedMessage);
 
         //TODO: remove the fixed relationship between MessageService & LocationMassageData; need to find out a design pattern
+        //Create a location data for current location information.
         LocationMessageData locationData = new LocationMessageData();
         Log.d(tag, locationData.toString());
 
