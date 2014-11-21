@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.cibobo.wooooo.asynctasks.MessageServiceDisconnection;
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.asynctasks.UserVerification;
+import com.cibobo.wooooo.provider.HandyStateProvider;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.slave.R;
 
@@ -105,10 +106,7 @@ public class LoginActivity extends ActionBarActivity {
                 editor.commit();
 
                 //Check the network connection.
-                ConnectivityManager connectivityManager = (ConnectivityManager) context.
-                        getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                if(networkInfo != null && networkInfo.isConnected()) {
+                if(HandyStateProvider.getInstant(context).isNetworkConnected()) {
                     UserData userData = new UserData(userName, passWord);
                     UserVerification verification = new UserVerification(context);
                     verification.execute(userData);

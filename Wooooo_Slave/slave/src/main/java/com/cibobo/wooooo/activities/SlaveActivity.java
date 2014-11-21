@@ -1,6 +1,7 @@
 package com.cibobo.wooooo.activities;
 
 import com.cibobo.wooooo.activities.util.SystemUiHider;
+import com.cibobo.wooooo.provider.HandyStateProvider;
 import com.cibobo.wooooo.provider.LocationManager;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.service.android.MessageService;
@@ -8,15 +9,18 @@ import com.cibobo.wooooo.slave.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -150,9 +154,15 @@ public class SlaveActivity extends Activity {
         //Create the service
         messageServiceIntent = new Intent(SlaveActivity.this, MessageService.class);
 
+        //Check GPS provider state; if not activated, create a dialog
+        if(!HandyStateProvider.getInstant(context).isLocationServiceActivated()){
+            createLocationSettingDialog();
+        }
+
         //Register the current activity to the LocationManager
         LocationManager.getInstant().registerActivity(SlaveActivity.this);
         LocationManager.getInstant().connection();
+
     }
 
     @Override
@@ -224,5 +234,26 @@ public class SlaveActivity extends Activity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    private void createLocationSettingDialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(context.getString(R.string.dialog_location_title));
+        dialog.setMessage(context.getString(R.string.dialog_warning_location));
+        dialog.setPositiveButton(context.getString(R.string.dialog_location_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Create an Intent to start the location setting.
+                Intent settingIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                context.startActivity(settingIntent);
+            }
+        });
+        dialog.setNegativeButton(context.getString(R.string.dialog_location_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialog.show();
     }
 }

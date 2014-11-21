@@ -5,7 +5,6 @@
     <string name="app_name">Wooooo</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
-
     <string name="title_activity_begin">BeginActivity</string>
     <string name="title_activity_slave">SlaveActivity</string>
 
@@ -24,6 +23,9 @@
     <string name="button_master">... I\'m waiting</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dialog_location_title">Tips for Location Service</string>
+    <string name="dialog_location_ok">OK</string>
+    <string name="dialog_location_cancel">Cancel</string>
 
     <!-- Messages -->
     <string name="slave_background_text">I\'m watching you!</string>
@@ -31,5 +33,6 @@
     <string name="login_error_user_empty">The user name should not be empty</string>
     <string name="login_error_network">Internet connection failed. Please check your network setting</string>
     <string name="login_error_XMPP">Can\'t connect to XMPP server. Please try again later</string>
+    <string name="dialog_warning_location">Please activate your location service to get a better resolution for your location</string>
 
 </resources>
