@@ -46,6 +46,14 @@ public class BeginActivity extends ActionBarActivity {
                 context.startActivity(slaveIntent);
             }
         });
+
+        beginMasterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent masterIntent = new Intent(context, TestMapActivity.class);
+                context.startActivity(masterIntent);
+            }
+        });
     }
 
     @Override

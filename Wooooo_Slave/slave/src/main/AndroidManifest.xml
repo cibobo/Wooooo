@@ -6,10 +6,14 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
+    <!-- Check the OpenGL version 2 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--
      To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
      option is required to comply with the Google+ Sign-In developer policies
@@ -22,8 +26,19 @@
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- Specific permission requirement by Google Maps API -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -39,16 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name="com.cibobo.wooooo.activities.MasterActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_main"
-            android:theme="@style/FullscreenTheme" >
-        </activity>
         <activity
             android:name="com.cibobo.wooooo.activities.BeginActivity"
             android:label="@string/title_activity_begin" >
@@ -59,12 +64,30 @@
             android:label="@string/title_activity_slave"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name="com.cibobo.wooooo.activities.MasterActivity"
+            android:label="@string/title_activity_master" >
+        </activity>
 
         <service
             android:name="com.cibobo.wooooo.service.android.MessageService"
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Google Map API key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAWPyrtIPjMf7-EH-Z9UEdg5OiFU2knSX4" />
+
+        <activity
+            android:name="com.cibobo.wooooo.activities.TestMapActivity"
+            android:label="@string/title_activity_test_map" >
+        </activity>
     </application>
 
 </manifest>
