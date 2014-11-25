@@ -1,10 +1,7 @@
 package com.cibobo.wooooo.activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cibobo.wooooo.asynctasks.MessageServiceDisconnection;
-import com.cibobo.wooooo.provider.HandyStateProvider;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.slave.R;
 
@@ -50,7 +46,7 @@ public class BeginActivity extends ActionBarActivity {
         beginMasterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent masterIntent = new Intent(context, TestMapActivity.class);
+                Intent masterIntent = new Intent(context, MasterActivity.class);
                 context.startActivity(masterIntent);
             }
         });

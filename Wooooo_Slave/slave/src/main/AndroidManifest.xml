@@ -82,12 +82,7 @@
         <!-- Google Map API key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAWPyrtIPjMf7-EH-Z9UEdg5OiFU2knSX4" />
-
-        <activity
-            android:name="com.cibobo.wooooo.activities.TestMapActivity"
-            android:label="@string/title_activity_test_map" >
-        </activity>
+            android:value="@string/Google_API_Key_linux" />
     </application>
 
 </manifest>

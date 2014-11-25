@@ -37,4 +37,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test_map">TestMapActivity</string>
 
+    <!-- Google API key -->
+    <string name="Google_API_Key_win">AIzaSyAWPyrtIPjMf7-EH-Z9UEdg5OiFU2knSX4</string>
+    <string name="Google_API_Key_linux">AIzaSyB3BmMRz4wU8CQRLwpzsV6BA_UAZ1KBPyA</string>
+
 </resources>
