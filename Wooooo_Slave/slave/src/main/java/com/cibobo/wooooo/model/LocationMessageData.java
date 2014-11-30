@@ -9,7 +9,7 @@ import com.cibobo.wooooo.provider.LocationManager;
  * Created by Cibobo on 11/18/2014.
  * The message data, which contains the current location information
  */
-public class LocationMessageData extends MessageData {
+public class LocationMessageData{
     private final String tag = "Location Message Data";
     private Location location;
 

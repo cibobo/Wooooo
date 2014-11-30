@@ -4,24 +4,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.cibobo.wooooo.asynctasks.MessageServiceDisconnection;
+import com.cibobo.wooooo.service.actuator.XMPPInstantMessageReceiveRunnable;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.slave.R;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class BeginActivity extends ActionBarActivity {
     //Log title
-    private String BEGIN_ACTIVITY_LOG_TITLE = "BeginActivity";
+    private final String tag = "BeginActivity";
+
+    private final int MAX_THREAD_COUNT = 1;
 
     private Button beginSlaveButton;
     private Button beginMasterButton;
 
     private Context context;
+
+    //Thread pool containing all necessary runnable, which is keep on active during the whole life of the APP
+    private ExecutorService executor;
 
 
     @Override
@@ -50,10 +61,31 @@ public class BeginActivity extends ActionBarActivity {
                 context.startActivity(masterIntent);
             }
         });
+
+        //Create thread pool to running the necessary task in other thread
+        executor = Executors.newFixedThreadPool(MAX_THREAD_COUNT);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        /*
+         * Start the MessageReceiveRunnable.
+         * This runnable will always running in the background during the whole life of the APP
+         */
+        executor.execute(XMPPInstantMessageService.getInstance().getMessageReceiveRunnable());
     }
 
     @Override
     protected void onDestroy() {
+        //Shut down all thread in thread pool
+        executor.shutdown();
+        try {
+            executor.awaitTermination((long)100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Log.e(tag, e.toString());
+        }
+
         MessageServiceDisconnection messageServiceDisconnection = new MessageServiceDisconnection();
         messageServiceDisconnection.execute(XMPPInstantMessageService.getInstance());
         super.onDestroy();

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cibobo.wooooo.model.LocationMessageData;
+import com.cibobo.wooooo.model.MessageData;
 import com.cibobo.wooooo.service.connection.ConnectionService;
 import com.google.android.gms.location.LocationClient;
 
@@ -52,6 +53,8 @@ public class XMPPInstantMessageService implements ConnectionService{
     private AbstractXMPPConnection connection = null;
 
     private XMPPInstantMessageReceiveThread messageReceiverThread = null;
+    private XMPPInstantMessageReceiveRunnable messageReceiveRunnable = null;
+
 
     private String savedMessage;
 
@@ -59,8 +62,6 @@ public class XMPPInstantMessageService implements ConnectionService{
         ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
         connection = new XMPPTCPConnection(connectionConfiguration);
     }
-
-
 
     /**
      * Create an instance of the XMPP Message Service
@@ -150,6 +151,16 @@ public class XMPPInstantMessageService implements ConnectionService{
         }
     }
 
+    public void sendMessage(MessageData messageData){
+        Message message = new Message(messageData.getReceiver());
+        message.setBody(messageData.getContent().toString());
+        try {
+            connection.sendPacket(message);
+        } catch (SmackException.NotConnectedException e) {
+            Log.e(tag, e.toString());
+        }
+    }
+
     @Override
     public Object receiveMessage() {
 //        PacketFilter filter = new PacketTypeFilter(Message.class);
@@ -177,6 +188,18 @@ public class XMPPInstantMessageService implements ConnectionService{
     }
 
     /**
+     * Return the receive runnable; if it not exist, create one.
+     * @message MessageReceiveRunnable cannot be created in the constructor of the XMPPInstantmessageService, because there is an Instant of it contained by MessageReceiveRunnable
+     * @return
+     */
+    public XMPPInstantMessageReceiveRunnable getMessageReceiveRunnable(){
+        if(messageReceiveRunnable == null){
+            messageReceiveRunnable = new XMPPInstantMessageReceiveRunnable();
+        }
+        return messageReceiveRunnable;
+    }
+
+    /**
      * Return the current connection
      * @return current connection
      */
@@ -195,36 +218,36 @@ public class XMPPInstantMessageService implements ConnectionService{
     }
 
 
-    /**
-     * Start the receiver thread; if it is the first time to start it, create a new instant.
-     */
-    @Override
-    public void startReceiverThread(){
-        if(messageReceiverThread == null) {
-            /*
-             *@message: because messageReceiverThread contains an Instance of XMPPInstantMessageService, the initialization of thread can not be done in the constructor of service
-             */
-            messageReceiverThread = new XMPPInstantMessageReceiveThread();
-            messageReceiverThread.start();
-        } else {
-            messageReceiverThread.resumeThread();
-        }
-        Log.i(tag, "current thread ID = " + messageReceiverThread.getId());
-
-    }
-
-
-    /**
-     * Stop the current thread. Only suspend the thread but not destroy it.
-     * The same thread can be resumed during the next call of startReceiverThread
-     */
-    @Override
-    public void stopReceiverThread(){
-        if(this.messageReceiverThread!=null){
-            messageReceiverThread.suspendThread();
-        }
-
-    }
+//    /**
+//     * Start the receiver thread; if it is the first time to start it, create a new instant.
+//     */
+//    @Override
+//    public void startReceiverThread(){
+//        if(messageReceiverThread == null) {
+//            /*
+//             *@message: because messageReceiverThread contains an Instance of XMPPInstantMessageService, the initialization of thread can not be done in the constructor of service
+//             */
+//            messageReceiverThread = new XMPPInstantMessageReceiveThread();
+//            messageReceiverThread.start();
+//        } else {
+//            messageReceiverThread.resumeThread();
+//        }
+//        Log.i(tag, "current thread ID = " + messageReceiverThread.getId());
+//
+//    }
+//
+//
+//    /**
+//     * Stop the current thread. Only suspend the thread but not destroy it.
+//     * The same thread can be resumed during the next call of startReceiverThread
+//     */
+//    @Override
+//    public void stopReceiverThread(){
+//        if(this.messageReceiverThread!=null){
+//            messageReceiverThread.suspendThread();
+//        }
+//
+//    }
 
     public void autoAnswer(Packet packet){
         Message message = (Message) packet;
@@ -232,7 +255,6 @@ public class XMPPInstantMessageService implements ConnectionService{
         Log.d(tag, "receive package: " + ((Message) packet).getType());
         Log.d(tag, "Receive message: " + savedMessage);
 
-        //TODO: remove the fixed relationship between MessageService & LocationMassageData; need to find out a design pattern
         //Create a location data for current location information.
         LocationMessageData locationData = new LocationMessageData();
         Log.d(tag, locationData.toString());

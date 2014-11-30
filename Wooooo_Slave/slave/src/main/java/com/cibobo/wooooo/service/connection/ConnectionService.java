@@ -14,8 +14,4 @@ public interface ConnectionService {
     public void sendMessage();
 
     public Object receiveMessage();
-
-    public void startReceiverThread();
-
-    public void stopReceiverThread();
 }
