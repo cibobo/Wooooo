@@ -1,21 +1,17 @@
 package com.cibobo.wooooo.service.android;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-
 import com.cibobo.wooooo.model.LocationMessageData;
 import com.cibobo.wooooo.model.MessageData;
-import com.cibobo.wooooo.service.actuator.XMPPInstantMessageReceiveRunnable;
-import com.cibobo.wooooo.service.actuator.XMPPInstantMessageReceiveThread;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.service.connection.ConnectionService;
-import com.google.android.gms.location.LocationClient;
-
-import org.jivesoftware.smack.packet.Packet;
+import com.cibobo.wooooo.slave.R;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -34,26 +30,37 @@ public class MessageService extends Service implements Observer {
     /**
      * Reimplement the function from Observer, which will analyse the content of the Message
      * @param observable
-     * @param o
+     * @param obj
      */
     @Override
-    public void update(Observable observable, Object o) {
+    public void update(Observable observable, Object obj) {
         Log.d(tag, "Runnable has " + observable.countObservers() + " Observers");
 
         //If receive a MessageData
-        if(o instanceof MessageData) {
+        if(obj instanceof MessageData) {
             Log.d(tag, "Receive notification");
-            MessageData message = (MessageData)o;
+            MessageData message = (MessageData)obj;
 
-            //Create a location data for current location information.
-            LocationMessageData locationData = new LocationMessageData();
-            Log.d(tag, locationData.toString());
+            if(message.getContent().toString().equals("cibobo")){
+                //Create a location data for current location information.
+                LocationMessageData locationData = new LocationMessageData();
+                Log.d(tag, locationData.toString());
 
-            //Create a answer including the current location info.
-            MessageData answer = new MessageData(message.getReceiver(),"cibobo2005@gmail.com", locationData.toString());
+                //Get the partner User name from SharedPreference
+                //TODO: temporary solution for the partner input
+                String savedPartnerName = this.getSharedPreferences(getString(R.string.login_data_preference), Context.MODE_PRIVATE)
+                        .getString(this.getString(R.string.login_partnerName), "");
 
-            //Send the answer back to the sender.
-            XMPPInstantMessageService.getInstance().sendMessage(answer);
+                //TODO: Check whether the message is coming from target partner
+                //Create a answer including the current location info.
+                MessageData answer = new MessageData(message.getReceiver().getUserName(), savedPartnerName, locationData.toString());
+
+                //Send the answer back to the sender.
+                XMPPInstantMessageService.getInstance().sendMessage(answer);
+
+            } else {
+                Log.e(tag, "Message is not equal to cibobo");
+            }
         } else {
             Log.e(tag, "Get the wrong type of the notificaton");
         }

@@ -21,11 +21,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/master_map_button"
+            android:text="@string/button_master_call"
+            android:id="@+id/master_map_call_button"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
 

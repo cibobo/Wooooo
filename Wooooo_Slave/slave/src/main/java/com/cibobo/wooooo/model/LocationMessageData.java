@@ -28,4 +28,12 @@ public class LocationMessageData{
             return "Location is null";
         }
     }
+
+    public double getLatitude(){
+        return location.getLatitude();
+    }
+
+    public double getLongitude(){
+        return location.getLongitude();
+    }
 }

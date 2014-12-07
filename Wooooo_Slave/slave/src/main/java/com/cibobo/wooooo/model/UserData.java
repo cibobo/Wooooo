@@ -12,6 +12,11 @@ public class UserData {
         this.passWord = "p";
     }
 
+    public UserData(String username){
+        this.userName = username;
+        this.passWord = "";
+    }
+
     public UserData(String name, String pass){
         this.userName = name;
         this.passWord = pass;

@@ -13,10 +13,12 @@
     <string name="login_username">USERNAME</string>
     <string name="login_password">PASSWORD</string>
     <string name="login_isPassSaved">IS_PASS_SAVED</string>
+    <string name="login_partnerName">PARTNERNAME</string>
 
     <!-- Component names -->
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
+    <string name="partner">Partner Name</string>
     <string name="checkbox_save_pass">save password</string>
     <string name="button_login">Log In</string>
     <string name="button_salve">I\'m coming ...</string>
@@ -26,6 +28,7 @@
     <string name="dialog_location_title">Tips for Location Service</string>
     <string name="dialog_location_ok">OK</string>
     <string name="dialog_location_cancel">Cancel</string>
+    <string name="button_master_call">Where are you</string>
 
     <!-- Messages -->
     <string name="slave_background_text">I\'m watching you!</string>
@@ -36,6 +39,8 @@
     <string name="dialog_warning_location">Please activate your location service to get a better resolution for your location</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test_map">TestMapActivity</string>
+    <string name="master_master_position_title">I\'m here</string>
+    <string name="master_slave_position_title">She is there</string>
 
     <!-- Google API key -->
     <string name="Google_API_Key_win">AIzaSyAWPyrtIPjMf7-EH-Z9UEdg5OiFU2knSX4</string>

@@ -1,16 +1,14 @@
-package com.cibobo.wooooo.service.actuator;
+package com.cibobo.wooooo.unused;
 
 import android.util.Log;
 
+import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
+
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.PacketListener;
-import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
-
-import java.io.IOException;
 
 /**
  * Created by cibobo on 11/8/14.

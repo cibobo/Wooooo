@@ -5,29 +5,29 @@ package com.cibobo.wooooo.model;
  * Abstract class for Message Data, which should be extended by other message type
  */
 public class MessageData {
-    private String sender;
-    private String receiver;
+    private UserData sender;
+    private UserData receiver;
     private Object content;
 
     public MessageData(String sender, String receiver, String content){
-        this.sender = sender;
-        this.receiver = receiver;
+        this.sender = new UserData(sender);
+        this.receiver = new UserData(receiver);
         this.content = content;
     }
 
-    public void setSender(String sender){
+    public void setSender(UserData sender){
         this.sender = sender;
     }
 
-    public String getSender(){
+    public UserData getSender(){
         return this.sender;
     }
 
-    public void setReceiver(String receiver){
+    public void setReceiver(UserData receiver){
         this.receiver = receiver;
     }
 
-    public String getReceiver(){
+    public UserData getReceiver(){
         return this.receiver;
     }
 

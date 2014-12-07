@@ -3,18 +3,13 @@ package com.cibobo.wooooo.asynctasks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.activities.BeginActivity;
-import com.cibobo.wooooo.service.actuator.XMPPInstantMessageReceiveThread;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.service.connection.ConnectionService;
-import com.cibobo.wooooo.service.connection.ConnectionServiceFactory;
 import com.cibobo.wooooo.slave.R;
 
 /**

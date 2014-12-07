@@ -34,6 +34,9 @@ public class LoginActivity extends ActionBarActivity {
     private EditText userNameEditText;
     private EditText passWordEditText;
 
+    //TODO: temporary solution for the partner input
+    private EditText partnerNameEditText;
+
     private CheckBox savePassCheckBox;
 
     private Button loginButton;
@@ -53,6 +56,8 @@ public class LoginActivity extends ActionBarActivity {
         userNameEditText = (EditText)this.findViewById(R.id.editTextUserName);
         passWordEditText = (EditText)this.findViewById(R.id.editTextPassword);
         savePassCheckBox = (CheckBox)this.findViewById(R.id.checkBoxSavePass);
+        //TODO: temporary solution for the partner input
+        partnerNameEditText = (EditText) this.findViewById(R.id.editTextPartnerName);
         loginButton = (Button)this.findViewById(R.id.buttonLogin);
 
         //Set login button as disabled, if the username is empty.
@@ -82,6 +87,10 @@ public class LoginActivity extends ActionBarActivity {
         String savedUserName = loginDataSharedPref.getString(this.getString(R.string.login_username),"");
         userNameEditText.setText(savedUserName);
 
+        //TODO: temporary solution for the partner input
+        String savedPartnerName = loginDataSharedPref.getString(this.getString(R.string.login_partnerName), "");
+        partnerNameEditText.setText(savedPartnerName);
+
         //If "save password" is selected by the user in last login, set the password with saved value.
         boolean isPassSaved = loginDataSharedPref.getBoolean(this.getString(R.string.login_isPassSaved), false);
 
@@ -102,7 +111,13 @@ public class LoginActivity extends ActionBarActivity {
 
                 //Save the selection of the user into shared preference
                 SharedPreferences.Editor editor = loginDataSharedPref.edit();
+
+                //TODO: temporary solution for the partner input
+                String partnerName = partnerNameEditText.getText().toString();
+                editor.putString(context.getString(R.string.login_partnerName), partnerName);
+
                 editor.putBoolean(context.getString(R.string.login_isPassSaved), isPassSaved);
+
                 editor.commit();
 
                 //Check the network connection.

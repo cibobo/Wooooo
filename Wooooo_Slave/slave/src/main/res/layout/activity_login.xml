@@ -59,15 +59,34 @@
         android:layout_below="@id/editTextPassword"
         android:layout_marginTop="10dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/partner"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/checkBoxSavePass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/blue"/>
+
+    <EditText
+        android:layout_width="@dimen/login_editText_width"
+        android:layout_height="@dimen/login_editText_height"
+        android:id="@+id/editTextPartnerName"
+        android:inputType="textShortMessage"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
 
     <Button
         android:layout_width="@dimen/login_editText_width"
         android:layout_height="@dimen/login_editText_height"
         android:text="@string/button_login"
         android:id="@+id/buttonLogin"
-        android:layout_below="@id/checkBoxSavePass"
+        android:layout_below="@id/editTextPartnerName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/button_selector"/>
 
 </RelativeLayout>

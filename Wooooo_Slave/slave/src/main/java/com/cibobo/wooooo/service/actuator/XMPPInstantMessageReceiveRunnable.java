@@ -23,10 +23,6 @@ import java.util.Observable;
 public class XMPPInstantMessageReceiveRunnable extends Observable implements Runnable{
     private final String tag = "XMPPInstantMessageReceiveRunnable";
 
-    //Monitor can be replaced by this pointer.
-    //private final Object Monitor = new Object();
-    private boolean pauseFlag = false;
-
     /*
      *@message: the initialization of XMPPInstantmessageReceiveRunnable can not be done in the constructor of XMPPInstantMessageService,
      * because there is an Instant of Service defined inside of Thread.
@@ -64,21 +60,19 @@ public class XMPPInstantMessageReceiveRunnable extends Observable implements Run
                         //Call checkPause to freeze the current thread.
                         Log.d(tag, "process packet called");
                         Message message = (Message) packet;
-                    /*
-                     *@message: the listener receive every time two messages: the first one contains the content but the second one contains null as body.
-                     * So a judgement must be created here to deal with the second message.
-                     */
+                        /*
+                         *@message: the listener receive every time two messages: the first one contains the content but the second one contains null as body.
+                         * So a judgement must be created here to deal with the second message.
+                         */
                         if (message.getBody() == null) {
                             Log.e(tag, "Received message contains null");
                         } else {
-                            if (message.getBody().equals("cibobo")) {
-                                //messageService.autoAnswer(packet);
-                                MessageData messageData = new MessageData(packet.getFrom(), packet.getTo(), ((Message) packet).getBody());
-                                //SetChanged must be called before notify all observers
-                                setChanged();
-                                //Send received message to every observers
-                                notifyObservers(messageData);
-                            }
+                            //messageService.autoAnswer(packet);
+                            MessageData messageData = new MessageData(packet.getFrom(), packet.getTo(), ((Message) packet).getBody());
+                            //SetChanged must be called before notify all observers
+                            setChanged();
+                            //Send received message to every observers
+                            notifyObservers(messageData);
                         }
                     }
                 }, filter);

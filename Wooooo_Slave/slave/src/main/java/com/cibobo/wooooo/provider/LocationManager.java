@@ -40,7 +40,13 @@ public class LocationManager implements
             Location location = null;
             LocationClient lClient = locationClients[0];
             if(lClient != null){
-                location = lClient.getLastLocation();
+                if(lClient.isConnected()) {
+                    location = lClient.getLastLocation();
+                } else {
+                    Log.e(tag, "The Location Client is still not connected");
+                }
+            } else {
+                Log.e(tag, "location client is null");
             }
             return location;
         }
@@ -71,6 +77,7 @@ public class LocationManager implements
         locationClient.disconnect();
     }
 
+    //TODO: If getLastLocation called direct after connection, there is a IllegalStateException. Need to synchronize both of these two functions
     //Add Async Task for the update of the last location, to avoid timeout in the main thread.
     public Location getLastLocation(){
         //TODO: Need to create a mechanism to handle the situation, that no Location Data can be provided.
