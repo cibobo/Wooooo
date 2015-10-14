@@ -13,10 +13,13 @@ import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.sasl.SASLMechanism;
+import org.jivesoftware.smack.sasl.provided.SASLPlainMechanism;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.packet.Message;
 
@@ -25,6 +28,9 @@ import java.io.IOException;
 /**
  * Created by Beibei on 15.10.2014.
  * This class should not include any handler from android.os
+ *
+ * Updated by Beibei on 29.09.2015.
+ * Google stopped their gtalk service, so that we have to change our code to use jabber
  */
 public class XMPPInstantMessageService implements ConnectionService{
 
@@ -35,12 +41,23 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     private String username = null;
     private String password = null;
+
+    private String servername = "Jabber";
+
+    /*
     private String host = "talk.google.com";
     private String service = "gmail.com";
+    private String targetUser = "cibobo2005@gmail.com";
+    */
+
+    private String host = "jabber.de";
+
     private int port = 5222;
+
     private String targetUser = "cibobo2005@gmail.com";
 
     private AbstractXMPPConnection connection = null;
+    private ConnectionConfiguration connectionConfiguration = null;
 
     private XMPPInstantMessageReceiveThread messageReceiverThread = null;
     private XMPPInstantMessageReceiveRunnable messageReceiveRunnable = null;
@@ -49,7 +66,7 @@ public class XMPPInstantMessageService implements ConnectionService{
     private String savedMessage;
 
     private XMPPInstantMessageService(){
-        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port,service);
+        connectionConfiguration = new ConnectionConfiguration(host, port);
         connection = new XMPPTCPConnection(connectionConfiguration);
     }
 
@@ -77,11 +94,25 @@ public class XMPPInstantMessageService implements ConnectionService{
          * https://www.google.com/settings/security/lesssecureapps
          */
         try {
+            /*
+             *  Message: Change the server to Jabber
+             *  Jabber allow to use PLAIN method to authenticate.
+             *  The more complicated method should be deactivated
+             */
+            SASLAuthentication.unBlacklistSASLMechanism("PLAIN");
+            SASLAuthentication.blacklistSASLMechanism("DIGEST-MD5");
             connection.connect();
             Log.i(tag, "Connect to " + connection.getHost());
-            Log.d(tag, "username: " + username + " | password: " +password);
+
             //TODO: Should add some code to make sure, that if the password is wrong, the APP can still running correctly.
-            connection.login(username, password);
+            /*
+             * Jabber only need the user name before @ to login.
+             * So call substring to get the login user name.
+             */
+            String loginUsername = username.substring(0, username.indexOf('@'));
+            Log.d(tag, "username: " + loginUsername + " | password: " + password);
+
+            connection.login(loginUsername, password);
             Log.i(tag,"Login as " + connection.getUser());
 
             Presence presence = new Presence(Presence.Type.available);
@@ -146,6 +177,7 @@ public class XMPPInstantMessageService implements ConnectionService{
         message.setBody(messageData.getContent().toString());
         try {
             connection.sendPacket(message);
+            Log.d(tag, "Send a new Message: " + message.toString());
         } catch (SmackException.NotConnectedException e) {
             Log.e(tag, e.toString());
         }
@@ -189,7 +221,7 @@ public class XMPPInstantMessageService implements ConnectionService{
         return messageReceiveRunnable;
     }
 
-    /**
+    /**createMessage
      * Return the current connection
      * @return current connection
      */

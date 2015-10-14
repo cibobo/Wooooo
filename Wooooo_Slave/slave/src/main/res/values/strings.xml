@@ -44,6 +44,7 @@
 
     <!-- Google API key -->
     <string name="Google_API_Key_win">AIzaSyAWPyrtIPjMf7-EH-Z9UEdg5OiFU2knSX4</string>
-    <string name="Google_API_Key_linux">AIzaSyB3BmMRz4wU8CQRLwpzsV6BA_UAZ1KBPyA</string>
+    <string name="Google_API_Key_linux">AIzaSyCfjbhSBuIjjEFQfYum8cbWXh5ZzH8UBnc</string>
+    <string name="Google_API_Key_linux_Release">AIzaSyCesnALAw9NyjD8QxFa5ArRDrl8nG5VFYM</string>
 
 </resources>
