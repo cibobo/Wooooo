@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.cibobo.wooooo.model.LocationMessageData;
 import com.cibobo.wooooo.model.MessageData;
+import com.cibobo.wooooo.model.UserData;
 import com.cibobo.wooooo.service.connection.ConnectionService;
 import com.cibobo.wooooo.unused.XMPPInstantMessageReceiveThread;
 
@@ -39,8 +40,7 @@ public class XMPPInstantMessageService implements ConnectionService{
 
     private static XMPPInstantMessageService serviceInstance = null;
 
-    private String username = null;
-    private String password = null;
+    private UserData loginUser = null;
 
     private String servername = "Jabber";
 
@@ -66,7 +66,7 @@ public class XMPPInstantMessageService implements ConnectionService{
     private String savedMessage;
 
     private XMPPInstantMessageService(){
-        connectionConfiguration = new ConnectionConfiguration(host, port);
+        ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(host,port);
         connection = new XMPPTCPConnection(connectionConfiguration);
     }
 
@@ -87,12 +87,15 @@ public class XMPPInstantMessageService implements ConnectionService{
     }
 
     @Override
-    public boolean connect(String username, String password) {
+    public boolean connect(UserData userData) {
         /*
          * Message: Google has recently switched to not allowing PLAIN and similar methods on its accounts.
          * If you still want to use the auth mechanism created by smack, the account must be enabled during
          * https://www.google.com/settings/security/lesssecureapps
          */
+        String username = userData.getUserName();
+        String password = userData.getPassWord();
+
         try {
             /*
              *  Message: Change the server to Jabber
@@ -128,8 +131,7 @@ public class XMPPInstantMessageService implements ConnectionService{
             return false;
         }
 
-        this.username = username;
-        this.password = password;
+        this.loginUser = userData;
 
         return true;
     }
@@ -138,7 +140,7 @@ public class XMPPInstantMessageService implements ConnectionService{
     //TODO: TO find out why after restart of the SW, it will be an AlreadyLoggedInException
     //A possible solution is to keep the login state after the shut down of the App.
     @Override
-    public void disconnection() {
+    public void disconnect() {
         try {
             if(serviceInstance.messageReceiverThread != null){
                 //Destroy the running Thread for message receiver
@@ -221,7 +223,7 @@ public class XMPPInstantMessageService implements ConnectionService{
         return messageReceiveRunnable;
     }
 
-    /**createMessage
+    /**
      * Return the current connection
      * @return current connection
      */
@@ -296,11 +298,15 @@ public class XMPPInstantMessageService implements ConnectionService{
     }
 
     public String getUsername(){
-        return this.username;
+        return this.loginUser.getUserName();
     }
 
     public String getPassword(){
-        return this.password;
+        return this.loginUser.getPassWord();
+    }
+
+    public UserData getUserData(){
+        return this.loginUser;
     }
 
     public Object getReceivedMessage(){

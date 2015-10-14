@@ -51,6 +51,9 @@ public class MessageService extends Service implements Observer {
                 String savedPartnerName = this.getSharedPreferences(getString(R.string.login_data_preference), Context.MODE_PRIVATE)
                         .getString(this.getString(R.string.login_partnerName), "");
 
+                Log.d(tag, "Sender Name: " + message.getReceiver().getUserName());
+                Log.d(tag, "Receiver Name: " + savedPartnerName);
+
                 //TODO: Check whether the message is coming from target partner
                 //Create a answer including the current location info.
                 MessageData answer = new MessageData(message.getReceiver().getUserName(), savedPartnerName, locationData.toString());
@@ -59,7 +62,7 @@ public class MessageService extends Service implements Observer {
                 XMPPInstantMessageService.getInstance().sendMessage(answer);
 
             } else {
-                Log.e(tag, "Message is not equal to cibobo");
+                Log.e(tag, "Message is not equal to cibobo: " + message.getContent().toString());
             }
         } else {
             Log.e(tag, "Get the wrong type of the notificaton");

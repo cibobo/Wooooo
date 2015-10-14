@@ -147,14 +147,16 @@ public class LocationManager implements
     @Override
     public void onConnected(Bundle bundle) {
         // Display the connection status
-        Toast.makeText(activity, "Connected", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(activity, "Connected", Toast.LENGTH_SHORT).show();
+        Log.i(tag, "Location Manager connected");
     }
 
     @Override
     public void onDisconnected() {
         // Display the connection status
-        Toast.makeText(activity, "Disconnected. Please re-connect.",
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(activity, "Disconnected. Please re-connect.",
+//                Toast.LENGTH_SHORT).show();
+        Log.i(tag, "Location Manager disconnected");
     }
 
     @Override

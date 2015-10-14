@@ -24,15 +24,14 @@ public class BeginActivity extends ActionBarActivity {
     //Log title
     private final String tag = "BeginActivity";
 
-    private final int MAX_THREAD_COUNT = 1;
+
 
     private Button beginSlaveButton;
     private Button beginMasterButton;
 
     private Context context;
 
-    //Thread pool containing all necessary runnable, which is keep on active during the whole life of the APP
-    private ExecutorService executor;
+
 
 
     @Override
@@ -62,29 +61,18 @@ public class BeginActivity extends ActionBarActivity {
             }
         });
 
-        //Create thread pool to running the necessary task in other thread
-        executor = Executors.newFixedThreadPool(MAX_THREAD_COUNT);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        /*
-         * Start the MessageReceiveRunnable.
-         * This runnable will always running in the background during the whole life of the APP
-         */
-        executor.execute(XMPPInstantMessageService.getInstance().getMessageReceiveRunnable());
+
     }
 
     @Override
     protected void onDestroy() {
-        //Shut down all thread in thread pool
-        executor.shutdown();
-        try {
-            executor.awaitTermination((long)100, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            Log.e(tag, e.toString());
-        }
+
 
         MessageServiceDisconnection messageServiceDisconnection = new MessageServiceDisconnection();
         messageServiceDisconnection.execute(XMPPInstantMessageService.getInstance());

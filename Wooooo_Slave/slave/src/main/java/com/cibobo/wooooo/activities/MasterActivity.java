@@ -110,6 +110,10 @@ public class MasterActivity extends Activity
 //                String receiver = "ninzainar@gmail.com";
                 //TODO: temporary solution for the partner input
                 String receiver = sharedPreferences.getString(context.getString(R.string.login_partnerName), "");
+
+                Log.d(tag, "Sender Name: " + sender);
+                Log.d(tag, "Receiver Name: " + receiver);
+
                 MessageData request = new MessageData(sender, receiver, requestMessage);
                 XMPPInstantMessageService.getInstance().sendMessage(request);
             }

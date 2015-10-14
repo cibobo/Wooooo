@@ -4,7 +4,7 @@
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="22" />
 
     <!-- Check the OpenGL version 2 -->
     <uses-feature
@@ -35,10 +35,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+        android:maxSdkVersion="22" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+        android:maxSdkVersion="22" />
 
     <application
         android:allowBackup="true"
@@ -82,7 +82,7 @@
         <!-- Google Map API key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/Google_API_Key_linux_Release" />
+            android:value="@string/Google_API_Key_linux" />
     </application>
 
 </manifest>

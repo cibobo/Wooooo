@@ -20,7 +20,7 @@ public class MessageServiceDisconnection extends AsyncTask<ConnectionService, Vo
     protected Void doInBackground(ConnectionService[] messageService) {
         Log.d(tag, "do in back ground is called");
         if(messageService[0] != null){
-            messageService[0].disconnection();
+            messageService[0].disconnect();
             Log.d(tag, "disconnection");
         } else {
             Log.e(tag, "Connection is null");

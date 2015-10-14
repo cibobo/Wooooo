@@ -74,7 +74,8 @@ public class XMPPInstantMessageReceiveThread extends Thread {
                     }
                 }, filter);
             } else {
-                messageService.connect(messageService.getUsername(),messageService.getPassword());
+                messageService.connect(messageService.getUserData());
+                Log.d(tag, "Connection is broken. Reconnect to the server");
             }
         } else {
             Log.d(tag, "connection is null!!!!");

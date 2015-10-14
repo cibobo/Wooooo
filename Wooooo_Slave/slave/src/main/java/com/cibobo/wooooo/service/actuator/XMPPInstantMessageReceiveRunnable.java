@@ -77,7 +77,8 @@ public class XMPPInstantMessageReceiveRunnable extends Observable implements Run
                     }
                 }, filter);
             } else {
-                messageService.connect(messageService.getUsername(),messageService.getPassword());
+                messageService.connect(messageService.getUserData());
+                Log.d(tag, "Connection is broken. Reconnect to the server");
             }
         } else {
             Log.d(tag, "connection is null!!!!");

@@ -27,6 +27,10 @@ import com.cibobo.wooooo.provider.HandyStateProvider;
 import com.cibobo.wooooo.service.actuator.XMPPInstantMessageService;
 import com.cibobo.wooooo.slave.R;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 public class LoginActivity extends ActionBarActivity {
     private final String tag = "Login Activity";
 
@@ -43,12 +47,23 @@ public class LoginActivity extends ActionBarActivity {
 
     private SharedPreferences loginDataSharedPref;
 
+    //Thread pool containing all necessary runnable, which is keep on active during the whole life of the APP
+    /*
+     * @message: the initialization of the runnable should Login from Begin. Otherwise for each time the user go back to the BeginActivity,
+     * there will be a new runnable created. That duplicate the send and receive messages,
+     */
+    private ExecutorService executor;
+    private final int MAX_THREAD_COUNT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         context = this;
+
+        //Create thread pool to running the necessary task in other thread
+        executor = Executors.newFixedThreadPool(MAX_THREAD_COUNT);
 
         //Create a Shared Preference. The login data will be saved after verification of User
         loginDataSharedPref = this.getSharedPreferences(getString(R.string.login_data_preference), Context.MODE_PRIVATE);
@@ -123,7 +138,7 @@ public class LoginActivity extends ActionBarActivity {
                 //Check the network connection.
                 if(HandyStateProvider.getInstant(context).isNetworkConnected()) {
                     UserData userData = new UserData(userName, passWord);
-                    UserVerification verification = new UserVerification(context);
+                    UserVerification verification = new UserVerification(context, executor);
                     verification.execute(userData);
                 } else {
                     Toast.makeText(context, getString(R.string.login_error_network), Toast.LENGTH_SHORT).show();
@@ -156,6 +171,13 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         //XMPPInstantMessageService.getInstance().disconnection();
+        //Shut down all thread in thread pool
+        executor.shutdown();
+        try {
+            executor.awaitTermination((long)100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Log.e(tag, e.toString());
+        }
         super.onDestroy();
     }
 }
